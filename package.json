@@ -14,7 +14,9 @@
     "stats": "npx webpack --profile --json=stats.json -c webpack.prod.js && npx webpack-bundle-analyzer stats.json",
     "test": "npx jest",
     "prettier": "npx prettier --write .",
-    "lint": "npx eslint --fix ."
+    "lint": "npx eslint --fix .",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "author": "",
   "license": "ISC",
@@ -36,5 +38,16 @@
     "typescript": "^5.3.3",
     "webpack": "^5.89.0",
     "webpack-cli": "^5.1.4"
+  },
+  "devDependencies": {
+    "@storybook/addon-essentials": "^7.6.6",
+    "@storybook/addon-interactions": "^7.6.6",
+    "@storybook/addon-links": "^7.6.6",
+    "@storybook/addon-onboarding": "^1.0.10",
+    "@storybook/blocks": "^7.6.6",
+    "@storybook/react": "^7.6.6",
+    "@storybook/react-webpack5": "^7.6.6",
+    "@storybook/test": "^7.6.6",
+    "storybook": "^7.6.6"
   }
 }

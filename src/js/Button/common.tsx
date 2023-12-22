@@ -82,6 +82,6 @@ const Button = React.forwardRef(
   }
 );
 
-Button.displayName = 'ButtonBase';
+Button.displayName = 'Button';
 
 export { Button };
