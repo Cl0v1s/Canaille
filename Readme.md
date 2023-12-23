@@ -16,6 +16,8 @@ Canaille (v3+) uses CSS layers to avoid messing with user's code. Utilities clas
 
 You can go there to see Canaille at it current state: [https://cl0v1s.github.io/Canaille](https://cl0v1s.github.io/Canaille)
 
+The current mockup can be found [here](https://www.figma.com/file/m8dLKnCxYvKt8WPxsSjIMH/Mangane?type=design&node-id=1-3&mode=design&t=GauHRHjwvP13vDM0-0)
+
 ## Technical stack
 
 - node
