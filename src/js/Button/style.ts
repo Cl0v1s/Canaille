@@ -7,10 +7,7 @@ function variantCSS(variant, state) {
     default:
     case "primary": {
       return {
-        "--background-color":
-          state !== "hover"
-            ? "var(--brand-primary-light)"
-            : "var(--brand-primary)",
+        "--background-color": "var(--brand-primary)",
         "--border": "2px solid var(--grey-100)",
         "--border-radius": "var(--rounded-100)",
       };
@@ -43,9 +40,6 @@ function stateCSS(state, variant) {
       return {
         "--box-shadow": "var(--dp-75)",
         transform: "translate(2px, -2px)",
-        transition: "all 0.2s ease",
-        "--background-color":
-          variant === "primary" ? "var(--brand-primary)" : undefined,
       };
     }
   }
@@ -66,6 +60,7 @@ function sizeCSS(size) {
         "--padding": "var(--spacing-2)",
         "--gap": "var(--spacing-2)",
         "--font-size": "var(--text-100)",
+        "--border-radius": "var(--rounded-50)",
       };
     }
   }
@@ -75,6 +70,7 @@ export function buttonCSS(variant, state, size) {
   return merge(
     {
       "--text-color": "var(--grey-100)",
+      transition: "all 0.2s ease",
 
       "&:hover": variant !== "secondary" ? stateCSS("hover", variant) : {},
     } as React.CSSProperties,
