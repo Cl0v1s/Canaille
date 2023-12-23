@@ -38,6 +38,7 @@ jobs:
         uses: actions/configure-pages@v4
       - name: Build
         run: |
+          corepack enable
           yarn
           yarn-laddle-build
           
