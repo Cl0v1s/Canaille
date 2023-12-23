@@ -8,7 +8,7 @@
     "utils": "utils"
   },
   "scripts": {
-    "build": "npx webpack -c webpack.dev.js",
+    "build": "npx webpack -c webpack.dev.mjs",
     "build-prod": "npx webpack -c webpack.prod.js",
     "dev": "npx webpack --config webpack.dev.js --watch",
     "stats": "npx webpack --profile --json=stats.json -c webpack.prod.js && npx webpack-bundle-analyzer stats.json",
@@ -35,19 +35,23 @@
     "react-dom": "^18.2.0",
     "sass": "^1.69.5",
     "sass-loader": "^13.3.2",
+    "style-loader": "^3.3.3",
     "typescript": "^5.3.3",
     "webpack": "^5.89.0",
     "webpack-cli": "^5.1.4"
   },
   "devDependencies": {
+    "@ladle/react": "^4.0.2",
     "@storybook/addon-essentials": "^7.6.6",
     "@storybook/addon-interactions": "^7.6.6",
     "@storybook/addon-links": "^7.6.6",
     "@storybook/addon-onboarding": "^1.0.10",
+    "@storybook/addon-styling-webpack": "^0.0.5",
     "@storybook/blocks": "^7.6.6",
     "@storybook/react": "^7.6.6",
     "@storybook/react-webpack5": "^7.6.6",
     "@storybook/test": "^7.6.6",
     "storybook": "^7.6.6"
-  }
+  },
+  "packageManager": "yarn@4.0.2"
 }

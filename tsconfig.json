@@ -1,5 +1,5 @@
 {
-    "include": ["src/js/index.ts"],
+    "include": ["src/index.ts"],
     "compilerOptions": {
         "lib": ["ES2019", "dom"],
         "emitDeclarationOnly": true,

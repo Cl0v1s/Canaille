@@ -66,6 +66,7 @@ export const StyleMeta: {
 function createNode(rules = ''): Sheet {
   if (globalThis.window) {
     const styleNode = document.createElement('style') as HTMLStyleElement;
+    styleNode.className = BASE_CLASS;
     document.head.appendChild(styleNode);
     const styleSheet = styleNode.sheet as CSSStyleSheet;
     // jest does not handle Layers correctly so we directly insert to the stylesheet instead

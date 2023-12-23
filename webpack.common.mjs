@@ -1,16 +1,33 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const { exec } = require('child_process');
-const path = require('path');
+import { exec } from 'child_process';
+import path from 'path';
 
-module.exports = {
+export const sassRule = {
+  test: /\.(sa|sc|c)ss$/i,
+  use: [
+    {
+      loader: 'style-loader',
+    },
+    {
+      loader: 'css-loader',
+    },
+    {
+      loader: 'sass-loader',
+      options: {
+        sassOptions: {
+          charset: false,
+          indentWidth: 4,
+          includePaths: [path.resolve('node_modules')],
+        },
+      },
+    },
+  ],
+};
+
+export default {
   entry: {
     bundle: {
-      import: './src/js/index.ts',
+      import: './src/index.ts',
       filename: 'index.js',
-    },
-    index: {
-      import: './src/scss/index.scss',
-      filename: 'ignore_index.js',
     },
   },
   resolve: {
@@ -22,7 +39,7 @@ module.exports = {
     libraryTarget: 'umd',
     globalObject: 'this',
     publicPath: 'auto',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve('dist'),
   },
   module: {
     rules: [
@@ -36,27 +53,7 @@ module.exports = {
           },
         },
       },
-      {
-        test: /\.(sa|sc|c)ss$/i,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name].css',
-            },
-          },
-          {
-            loader: 'sass-loader',
-            options: {
-              sassOptions: {
-                charset: false,
-                indentWidth: 4,
-                includePaths: [path.resolve(__dirname, 'node_modules')],
-              },
-            },
-          },
-        ],
-      },
+      sassRule
     ],
   },
   externals: {

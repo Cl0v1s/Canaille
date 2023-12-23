@@ -1,0 +1,6 @@
+// liste de toutes les variables disponibles
+@use './variables' as vars;
+
+:root {
+  @include vars.variables();
+}
