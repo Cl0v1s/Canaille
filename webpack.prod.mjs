@@ -1,6 +1,6 @@
-import common from './webpack.common.mjs';
+import common from "./webpack.common.mjs";
 
 export default {
   ...common,
-  mode: 'production',
+  mode: "production",
 };

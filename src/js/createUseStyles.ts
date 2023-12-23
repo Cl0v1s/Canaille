@@ -1,8 +1,14 @@
-import React from 'react';
-import debounce from 'debounce';
-import pack from '../../package.json';
+import React from "react";
+import debounce from "debounce";
+import pack from "../../package.json";
 
-type Style = { [cls: string]: Style | React.CSSProperties | ((props: any) => Style | React.CSSProperties) | Style };
+type Style = {
+  [cls: string]:
+    | Style
+    | React.CSSProperties
+    | ((props: any) => Style | React.CSSProperties)
+    | Style;
+};
 
 type CSSItem = {
   rule: string;
@@ -24,7 +30,7 @@ type Keyframe = {
   originalName: string;
 };
 
-const BASE_CLASS = 'CANAILLE';
+const BASE_CLASS = "CANAILLE";
 
 /**
  * Return a counter function used to generate rules prefixes
@@ -54,7 +60,10 @@ export const StyleMeta: {
   createGenerateId,
   layerSheet: undefined as unknown as Sheet,
   sheet: undefined as unknown as Sheet,
-  getServerSideStyle: () => `${StyleMeta.layerSheet.style.join('\n\n')}\n\n${StyleMeta.sheet.style.join('\n\n')}`,
+  getServerSideStyle: () =>
+    `${StyleMeta.layerSheet.style.join("\n\n")}\n\n${StyleMeta.sheet.style.join(
+      "\n\n",
+    )}`,
 };
 
 /**
@@ -63,9 +72,9 @@ export const StyleMeta: {
  * @param rules
  * @returns
  */
-function createNode(rules = ''): Sheet {
+function createNode(rules = ""): Sheet {
   if (globalThis.window) {
-    const styleNode = document.createElement('style') as HTMLStyleElement;
+    const styleNode = document.createElement("style") as HTMLStyleElement;
     styleNode.className = BASE_CLASS;
     document.head.appendChild(styleNode);
     const styleSheet = styleNode.sheet as CSSStyleSheet;
@@ -136,12 +145,17 @@ function _updateLayersOrder(higherId: number) {
   if (globalThis.process?.env?.JEST_WORKER_ID) return;
   StyleMeta.layerSheet.reset();
   let layers = new Array(higherId + 1).fill(0);
-  layers = layers.reduce((acc, curr, index) => [...acc, `${BASE_CLASS}-${index}`], []);
-  const rule = `@layer ${layers.join(', ')};`;
+  layers = layers.reduce(
+    (acc, curr, index) => [...acc, `${BASE_CLASS}-${index}`],
+    [],
+  );
+  const rule = `@layer ${layers.join(", ")};`;
   StyleMeta.layerSheet.insertRule(rule, 0);
 }
 
-const updateLayersOrder = !globalThis.window ? _updateLayersOrder : debounce(_updateLayersOrder, 50);
+const updateLayersOrder = !globalThis.window
+  ? _updateLayersOrder
+  : debounce(_updateLayersOrder, 50);
 
 /**
  * Convert JS rule into valid css rule
@@ -152,18 +166,22 @@ const updateLayersOrder = !globalThis.window ? _updateLayersOrder : debounce(_up
  */
 function parseRule(prefix: string, ruleName: string, ruleBody: string) {
   const name = ruleName
-    .replace(/([A-Z])/g, '-$1')
+    .replace(/([A-Z])/g, "-$1")
     .toLowerCase()
     .trim();
   let body = ruleBody;
-  if (name === 'animation' || name === 'animation-name') {
+  if (name === "animation" || name === "animation-name") {
     const match = body.match(/\$(\S+)/);
     if (match) {
-      const keyframe = StyleMeta.keyframes.find((k) => k.originalName === match[1] && k.prefix === prefix);
+      const keyframe = StyleMeta.keyframes.find(
+        (k) => k.originalName === match[1] && k.prefix === prefix,
+      );
       if (keyframe) {
         body = body.replace(match[0], keyframe.name);
       } else {
-        console.warn(`createUseStyle: Unable to find declared keyframe ${match[1]} in stylesheet ${prefix}`);
+        console.warn(
+          `createUseStyle: Unable to find declared keyframe ${match[1]} in stylesheet ${prefix}`,
+        );
       }
     }
   }
@@ -191,17 +209,24 @@ function flatCSS(css: CSSItem): Array<CSSItem> {
  * @param obj
  * @returns
  */
-function convertObjectToCSSString(prefix: string, className: string, obj: React.CSSProperties): CSSItem | null {
+function convertObjectToCSSString(
+  prefix: string,
+  className: string,
+  obj: React.CSSProperties,
+): CSSItem | null {
   if (!obj) return null;
   const { properties, children } = Object.keys(obj).reduce(
     (acc, curr) => {
-      if (typeof obj[curr] === 'object') {
+      if (typeof obj[curr] === "object") {
         const calculated = convertObjectToCSSString(prefix, curr, obj[curr]);
         if (!calculated) return acc;
-        const parts = curr.split(',');
+        const parts = curr.split(",");
         return {
           ...acc,
-          children: [...acc.children, ...parts.map((r) => ({ ...calculated, rule: r }))],
+          children: [
+            ...acc.children,
+            ...parts.map((r) => ({ ...calculated, rule: r })),
+          ],
         } as never;
       }
       return {
@@ -212,7 +237,7 @@ function convertObjectToCSSString(prefix: string, className: string, obj: React.
     {
       properties: [],
       children: [],
-    }
+    },
   );
 
   return {
@@ -232,7 +257,7 @@ function convertObjectToCSSString(prefix: string, className: string, obj: React.
  */
 function createKeyFrames(prefix, ruleName, style, props: Array<any> = []) {
   // extract keyframe name
-  const originalName = ruleName.replace('@keyframes', '').trim();
+  const originalName = ruleName.replace("@keyframes", "").trim();
   const name = `${prefix}-${originalName}`;
   const keyframe: Keyframe = {
     name,
@@ -241,12 +266,16 @@ function createKeyFrames(prefix, ruleName, style, props: Array<any> = []) {
   };
   StyleMeta.keyframes.push(keyframe);
   const css =
-    typeof style === 'function'
-      ? convertObjectToCSSString(prefix, name, (style as (...props: any) => React.CSSProperties)(...props))
+    typeof style === "function"
+      ? convertObjectToCSSString(
+          prefix,
+          name,
+          (style as (...props: any) => React.CSSProperties)(...props),
+        )
       : convertObjectToCSSString(prefix, name, style as React.CSSProperties);
   if (!css)
     return {
-      className: '',
+      className: "",
       rules: [],
     };
   const frames = flatCSS(css);
@@ -254,12 +283,14 @@ function createKeyFrames(prefix, ruleName, style, props: Array<any> = []) {
   frames.shift();
   const rule = `
     @keyframes ${name} {
-      ${frames.map((f) => `${f.rule} { ${f.properties.join('\n')} }`).join('\n\n')}
+      ${frames
+        .map((f) => `${f.rule} { ${f.properties.join("\n")} }`)
+        .join("\n\n")}
     }
   `;
   return {
     // we dont want to issue any className for this
-    className: '',
+    className: "",
     rules: [rule],
   };
 }
@@ -272,33 +303,51 @@ function createKeyFrames(prefix, ruleName, style, props: Array<any> = []) {
  * @param props
  * @returns
  */
-function createCSSBlock(prefix: string, ruleName: string, style, props: Array<any> = []) {
-  if (ruleName.startsWith('@keyframes')) return createKeyFrames(prefix, ruleName, style, props);
+function createCSSBlock(
+  prefix: string,
+  ruleName: string,
+  style,
+  props: Array<any> = [],
+) {
+  if (ruleName.startsWith("@keyframes"))
+    return createKeyFrames(prefix, ruleName, style, props);
   const className = `${prefix}-${ruleName}`;
   const css =
-    typeof style === 'function'
-      ? convertObjectToCSSString(prefix, className, (style as (...props: any) => React.CSSProperties)(...props))
-      : convertObjectToCSSString(prefix, className, style as React.CSSProperties);
+    typeof style === "function"
+      ? convertObjectToCSSString(
+          prefix,
+          className,
+          (style as (...props: any) => React.CSSProperties)(...props),
+        )
+      : convertObjectToCSSString(
+          prefix,
+          className,
+          style as React.CSSProperties,
+        );
 
   if (!css)
     return {
-      className: '',
+      className: "",
       rules: [],
     };
 
-  const nakedRule = flatCSS(css).map((c) => `.${c.rule.trim()} {\n ${c.properties.join('\n')} \n}`);
+  const nakedRule = flatCSS(css).map(
+    (c) => `.${c.rule.trim()} {\n ${c.properties.join("\n")} \n}`,
+  );
 
   // we wrap rules inside a nested layer so we can ensure that higher prefix ID ensure higher priority
   const basePrefix = prefix.match(/[A-Z]+-[0-9]+/i);
-  if(!basePrefix) throw new Error("Incoherent prefix");
+  if (!basePrefix) throw new Error("Incoherent prefix");
   const layeredRule = `
     @layer ${basePrefix[0]} {
-      ${nakedRule.join('\n\n')}
+      ${nakedRule.join("\n\n")}
     }
   `;
 
   // Jest doesnt handle layer correctly
-  const rules = globalThis.process?.env?.JEST_WORKER_ID ? nakedRule : [layeredRule];
+  const rules = globalThis.process?.env?.JEST_WORKER_ID
+    ? nakedRule
+    : [layeredRule];
 
   return {
     className,
@@ -308,7 +357,9 @@ function createCSSBlock(prefix: string, ruleName: string, style, props: Array<an
 
 // Select correct hook given the context
 // if react 18 -> React.useInsertionEffect else useLayoutEffect. On the ServerSide, we directly run the func
-const useLayoutEffect = globalThis.window ? React.useInsertionEffect || React.useLayoutEffect : (fn) => fn();
+const useLayoutEffect = globalThis.window
+  ? React.useInsertionEffect || React.useLayoutEffect
+  : (fn) => fn();
 
 /**
  * Manage stylesheet created from object declarations
@@ -322,8 +373,12 @@ export function createUseStyles(style: Style) {
 
   // here we only apply "static" styles aka the ones that arent declared via func
   const staticClasseNames = Object.keys(style).reduce((acc, curr) => {
-    if (typeof style[curr] === 'function') return acc;
-    const { className, rules } = createCSSBlock(`${BASE_CLASS}-${sheetId}`, curr, style[curr]);
+    if (typeof style[curr] === "function") return acc;
+    const { className, rules } = createCSSBlock(
+      `${BASE_CLASS}-${sheetId}`,
+      curr,
+      style[curr],
+    );
     rules.forEach((r) => StyleMeta.sheet.insertRule(r, 0));
     return {
       ...acc,
@@ -336,11 +391,16 @@ export function createUseStyles(style: Style) {
 
   return function useStyle(...props): { [key: string]: string } {
     // consistent id between server and browser
-    const styleId = React.useId().replace(/:/g, '');
+    const styleId = React.useId().replace(/:/g, "");
     const propsHash = JSON.stringify(props, (key, value) => {
       // we handle stringify some edgecases
       if (globalThis.HTMLElement && value instanceof HTMLElement)
-        return value.className + value.id + value.parentElement?.className + value.parentElement?.id;
+        return (
+          value.className +
+          value.id +
+          value.parentElement?.className +
+          value.parentElement?.id
+        );
       return value;
     });
 
@@ -348,8 +408,13 @@ export function createUseStyles(style: Style) {
     const { dynamicClassNames, dynamicRules } = React.useMemo(() => {
       const wDynamicRules: Array<string> = [];
       const wDynamicClassNames = Object.keys(style).reduce((acc, curr) => {
-        if (typeof style[curr] !== 'function') return acc;
-        const { className, rules } = createCSSBlock(`${BASE_CLASS}-${sheetId}-${styleId}`, curr, style[curr], props);
+        if (typeof style[curr] !== "function") return acc;
+        const { className, rules } = createCSSBlock(
+          `${BASE_CLASS}-${sheetId}-${styleId}`,
+          curr,
+          style[curr],
+          props,
+        );
         wDynamicRules.push(...rules);
         return {
           ...acc,
@@ -372,6 +437,9 @@ export function createUseStyles(style: Style) {
       };
     }, [JSON.stringify(dynamicRules)]);
 
-    return React.useMemo(() => ({ ...staticClasseNames, ...dynamicClassNames }), [JSON.stringify(dynamicClassNames)]);
+    return React.useMemo(
+      () => ({ ...staticClasseNames, ...dynamicClassNames }),
+      [JSON.stringify(dynamicClassNames)],
+    );
   };
 }

@@ -12,7 +12,6 @@ The third library is a SVG library that exports a JavaScript bundle for icons. T
 
 Canaille (v3+) uses CSS layers to avoid messing with user's code. Utilities classes will take over components style, and other css code will win everything.
 
-
 ## Technical stack
 
 - node
@@ -72,7 +71,7 @@ Integrating Canaille (3+) into your project is a straightforward process. Canail
 To include the CSS file in your project, use the following import statement:
 
 ```javascript
-import 'canaille/index.css';
+import "canaille/index.css";
 ```
 
 #### 2. Import the Component JavaScript file
@@ -80,7 +79,7 @@ import 'canaille/index.css';
 To use Canaille components, import the necessary JavaScript file, including the components you need:
 
 ```javascript
-import { Article, Button, Icon } from 'canaille';
+import { Article, Button, Icon } from "canaille";
 ```
 
 #### 3. Import the Icons JavaScript file
@@ -88,7 +87,7 @@ import { Article, Button, Icon } from 'canaille';
 If you require icons from Canaille, you can import them as follows:
 
 ```javascript
-import { icnArrowLineRight } from 'canaille/icons';
+import { icnArrowLineRight } from "canaille/icons";
 ```
 
 For usage examples of these icons, refer to the "Icon / Icon" section.

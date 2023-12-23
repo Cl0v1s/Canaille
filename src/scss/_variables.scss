@@ -1,35 +1,35 @@
 // Liste de toutes les couleurs de marque disponibles
 // Documentation: Colors/Palet/Brand
-$color-brand-primary: #6DDBB4;
-$color-brand-primary-light: #E2EDDA;
-$color-brand-primary-medium: #6DDBB4;
-$color-brand-primary-dark: #31B285;
+$color-brand-primary: #6ddbb4;
+$color-brand-primary-light: #e2edda;
+$color-brand-primary-medium: #6ddbb4;
+$color-brand-primary-dark: #31b285;
 $brand-colors: (
-    'brand-primary': $color-brand-primary,
-    'brand-primary-light': $color-brand-primary-light,
-    'brand-primary-medium': $color-brand-primary-medium,
-    'brand-primary-dark': $color-brand-primary-dark,
+  "brand-primary": $color-brand-primary,
+  "brand-primary-light": $color-brand-primary-light,
+  "brand-primary-medium": $color-brand-primary-medium,
+  "brand-primary-dark": $color-brand-primary-dark,
 );
 
 // Liste de toutes les couleurs Additionelles
 // Documentation: Colors/Palet/Additional
-$color-additional-primary: #FFF1E3;
-$color-additional-primary-light: #FAF4F0;
-$color-additional-primary-medium: #FFF1E3;
-$color-additional-primary-dark: #CCAE91;
+$color-additional-primary: #fff1e3;
+$color-additional-primary-light: #faf4f0;
+$color-additional-primary-medium: #fff1e3;
+$color-additional-primary-dark: #ccae91;
 $color-additional-secondary: #070727;
-$color-additional-secondary-light: #0C0C46;
+$color-additional-secondary-light: #0c0c46;
 $color-additional-secondary-medium: #070727;
 $color-additional-secondary-dark: #010029;
 $additional-colors: (
-    'additional-primary': $color-additional-primary,
-    'additional-primary-light': $color-additional-primary-light,
-    'additional-primary-medium': $color-additional-primary-medium,
-    'additional-primary-dark': $color-additional-primary-dark,
-    'additional-secondary': $color-additional-primary,
-    'additional-secondary-light': $color-additional-primary-light,
-    'additional-secondary-medium': $color-additional-primary-medium,
-    'additional-secondary-dark': $color-additional-primary-dark,
+  "additional-primary": $color-additional-primary,
+  "additional-primary-light": $color-additional-primary-light,
+  "additional-primary-medium": $color-additional-primary-medium,
+  "additional-primary-dark": $color-additional-primary-dark,
+  "additional-secondary": $color-additional-primary,
+  "additional-secondary-light": $color-additional-primary-light,
+  "additional-secondary-medium": $color-additional-primary-medium,
+  "additional-secondary-dark": $color-additional-primary-dark,
 );
 
 // Liste de toutes les couleurs d'alerte disponibles
@@ -63,18 +63,18 @@ $alert-colors: [];
 // Liste de toutes les gris disponibles
 // Documentation: Colors/Palet/Greys
 $white: white;
-$grey-0: #C7C7F2;
-$grey-25: #9595BF;
-$grey-50: #51518C;
+$grey-0: #c7c7f2;
+$grey-25: #9595bf;
+$grey-50: #51518c;
 $grey-75: #222259;
 $grey-100: #070727;
 $grey-colors: (
-    'white': $white,
-    'grey-0': $grey-0,
-    'grey-25': $grey-25,
-    'grey-50': $grey-50,
-    'grey-75': $grey-75,
-    'grey-100': $grey-100,
+  "white": $white,
+  "grey-0": $grey-0,
+  "grey-25": $grey-25,
+  "grey-50": $grey-50,
+  "grey-75": $grey-75,
+  "grey-100": $grey-100,
 );
 
 // Liste de toutes les couleurs disponibles
@@ -87,7 +87,7 @@ $font-family-primary: "Atkinson Hyperlegible";
 $font-family-secondary: unset;
 $font-family-tertiary: unset;
 $font-families: (
-    "font-family-primary": $font-family-primary,
+  "font-family-primary": $font-family-primary,
 );
 
 // Liste de toutes les tailles de police disponibles
@@ -101,12 +101,12 @@ $text-150: 2rem; // 32px
 $text-175: 2.5rem; // 40px
 $text-200: 5rem; // 80px
 $text-sizes: (
-    "text-50": $text-50,
-    "text-100": $text-100,
-    "text-125": $text-125,
-    "text-150": $text-150,
-    "text-175": $text-175,
-    "text-200": $text-200,
+  "text-50": $text-50,
+  "text-100": $text-100,
+  "text-125": $text-125,
+  "text-150": $text-150,
+  "text-175": $text-175,
+  "text-200": $text-200,
 );
 
 $weight-bold: 700;
@@ -116,12 +116,12 @@ $weight-regular: 400;
 $weight-normal: 400;
 $weight-light: 300;
 $font-weights: (
-    "weight-bold": $weight-bold,
-    "weight-semibold": $weight-semibold,
-    "weight-medium": $weight-medium,
-    "weight-regular": $weight-regular,
-    "weight-normal": $weight-normal,
-    "weight-light": $weight-light,
+  "weight-bold": $weight-bold,
+  "weight-semibold": $weight-semibold,
+  "weight-medium": $weight-medium,
+  "weight-regular": $weight-regular,
+  "weight-normal": $weight-normal,
+  "weight-light": $weight-light,
 );
 
 // Liste de toutes les familles de titre disponibles
@@ -153,10 +153,10 @@ $h4-size: $text-125;
 $h5-size: unset;
 $h6-size: unset;
 $h-sizes: (
-    "h1-size": $h1-size,
-    "h2-size": $h2-size,
-    "h3-size": $h3-size,
-    "h4-size": $h4-size,
+  "h1-size": $h1-size,
+  "h2-size": $h2-size,
+  "h3-size": $h3-size,
+  "h4-size": $h4-size,
 );
 
 // Liste de toutes les graisses de titre disponibles
@@ -168,10 +168,10 @@ $h4-weight: $weight-bold;
 $h5-weight: unset;
 $h6-weight: unset;
 $h-weights: (
-    "h1-weight": $h1-weight,
-    "h2-weight": $h2-weight,
-    "h3-weight": $h3-weight,
-    "h4-weight": $h4-weight,
+  "h1-weight": $h1-weight,
+  "h2-weight": $h2-weight,
+  "h3-weight": $h3-weight,
+  "h4-weight": $h4-weight,
 );
 
 // Liste de toutes les line-heights disponibles
@@ -195,10 +195,10 @@ $rounded-125: unset;
 $rounded-150: unset;
 $rounded-200: 32px;
 $rounded-sizes: (
-    "rounded-0": $rounded-0,
-    "rounded-50": $rounded-50,
-    "rounded-100": $rounded-100,
-    "rounded-200": $rounded-200,
+  "rounded-0": $rounded-0,
+  "rounded-50": $rounded-50,
+  "rounded-100": $rounded-100,
+  "rounded-200": $rounded-200,
 );
 
 // Liste de toutes les ombres disponibles
@@ -209,10 +209,10 @@ $dp-50: unset;
 $dp-75: -2px 4px 0px 0px $grey-100;
 $dp-100: -4px 8px 0px 0px $grey-100;
 $dp-sizes: (
-    "dp-0": $dp-0,
-    "dp-25": $dp-25,
-    "dp-75": $dp-75,
-    "dp-100": $dp-100
+  "dp-0": $dp-0,
+  "dp-25": $dp-25,
+  "dp-75": $dp-75,
+  "dp-100": $dp-100,
 );
 
 // ==========================================
@@ -225,11 +225,11 @@ $opacity-50: 0.5;
 $opacity-75: 0.75;
 $opacity-100: 1;
 $opacity-sizes: (
-    "opacity-0": $opacity-0,
-    "opacity-25": $opacity-25,
-    "opacity-50": $opacity-50,
-    "opacity-75": $opacity-75,
-    "opacity-100": $opacity-100,
+  "opacity-0": $opacity-0,
+  "opacity-25": $opacity-25,
+  "opacity-50": $opacity-50,
+  "opacity-75": $opacity-75,
+  "opacity-100": $opacity-100,
 );
 
 // liste espacements disponibles
@@ -241,12 +241,12 @@ $spacing-3: 16px;
 $spacing-4: 24px;
 $spacing-5: 32px;
 $spacing-sizes: (
-    "spacing-0": $spacing-0,
-    "spacing-1": $spacing-1,
-    "spacing-2": $spacing-2,
-    "spacing-3": $spacing-3,
-    "spacing-4": $spacing-4,
-    "spacing-5": $spacing-5,
+  "spacing-0": $spacing-0,
+  "spacing-1": $spacing-1,
+  "spacing-2": $spacing-2,
+  "spacing-3": $spacing-3,
+  "spacing-4": $spacing-4,
+  "spacing-5": $spacing-5,
 );
 
 // Liste de toutes les z-values disponibles
@@ -257,19 +257,19 @@ $z-2: 5;
 $z-3: 10;
 $z-cheating: 100;
 $z-values: (
-    "z-0": $z-0,
-    "z-1": $z-1,
-    "z-2": $z-2,
-    "z-3": $z-3,
-    "z-cheating": $z-cheating,
+  "z-0": $z-0,
+  "z-1": $z-1,
+  "z-2": $z-2,
+  "z-3": $z-3,
+  "z-cheating": $z-cheating,
 );
 
 // Variables secondaires
 $border-width: 2px;
 $border-color: $grey-100;
 $borders: (
-    "border-width": $border-width,
-    "border-color": $border-color,
+  "border-width": $border-width,
+  "border-color": $border-color,
 );
 
 $variables: map-merge(

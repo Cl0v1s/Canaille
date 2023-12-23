@@ -1,8 +1,9 @@
 import React from 'react';
 
 import { ICommonProps } from '../types/ICommonProps';
-import { createUseStyles } from './../createUseStyles';
+import { createUseStyles } from '../createUseStyles';
 import { buttonCSS } from './style';
+import '../../scss/index.scss';
 // Button base component
 
 export interface IButton extends ICommonProps {
@@ -10,9 +11,9 @@ export interface IButton extends ICommonProps {
   children?: React.ReactNode;
   disabled?: boolean;
   onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  variant?: "primary" | "secondary" | "light";
+  variant?: 'primary' | 'secondary' | 'light';
   size?: 50 | 100;
-  state?: "hover" | "default";
+  state?: 'hover' | 'default';
 }
 
 const useStyles = createUseStyles({
@@ -41,7 +42,7 @@ const useStyles = createUseStyles({
     boxShadow: 'var(--box-shadow)',
     cursor: 'pointer',
   } as React.CSSProperties,
-  canaille: ({ variant, size, state}) => buttonCSS(variant, state, size),
+  canaille: ({ variant, size, state }) => buttonCSS(variant, state, size),
 });
 
 const Button = React.forwardRef(
@@ -55,12 +56,12 @@ const Button = React.forwardRef(
       children,
       disabled = false,
       onClick,
-      variant = "primary",
+      variant = 'primary',
       size = 100,
-      state = "default",
+      state = 'default',
       ...rest
     }: IButton,
-    ref
+    ref,
   ) => {
     const { variables, button, canaille } = useStyles({ variant, size, state });
 
@@ -79,7 +80,7 @@ const Button = React.forwardRef(
         {children}
       </button>
     );
-  }
+  },
 );
 
 Button.displayName = 'Button';
