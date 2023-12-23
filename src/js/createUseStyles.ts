@@ -49,7 +49,8 @@ function createGenerateId() {
  */
 export const StyleMeta: {
   layerSheet: Sheet;
-  sheet: Sheet;
+  staticSheet: Sheet;
+  dynamicSheet: Sheet;
   keyframes: Array<Keyframe>;
   generateId: () => number;
   createGenerateId: () => () => number;
@@ -59,9 +60,9 @@ export const StyleMeta: {
   generateId: createGenerateId(),
   createGenerateId,
   layerSheet: undefined as unknown as Sheet,
-  sheet: undefined as unknown as Sheet,
+  staticSheet: undefined as unknown as Sheet,
   getServerSideStyle: () =>
-    `${StyleMeta.layerSheet.style.join("\n\n")}\n\n${StyleMeta.sheet.style.join(
+    `${StyleMeta.layerSheet.style.join("\n\n")}\n\n${StyleMeta.staticSheet.style.join(
       "\n\n",
     )}`,
 };
@@ -77,6 +78,7 @@ function createNode(rules = ""): Sheet {
     const styleNode = document.createElement("style") as HTMLStyleElement;
     styleNode.className = BASE_CLASS;
     document.head.appendChild(styleNode);
+    console.log(styleNode);
     const styleSheet = styleNode.sheet as CSSStyleSheet;
     // jest does not handle Layers correctly so we directly insert to the stylesheet instead
     if (!globalThis.process?.env?.JEST_WORKER_ID) {
@@ -132,7 +134,8 @@ function createNode(rules = ""): Sheet {
 
 // We set this here to avoid "declared before use" warning
 StyleMeta.layerSheet = createNode();
-StyleMeta.sheet = createNode();
+StyleMeta.staticSheet = createNode();
+StyleMeta.dynamicSheet = createNode();
 
 /**
  * Manage sheets priority
@@ -379,7 +382,7 @@ export function createUseStyles(style: Style) {
       curr,
       style[curr],
     );
-    rules.forEach((r) => StyleMeta.sheet.insertRule(r, 0));
+    rules.forEach((r) => StyleMeta.staticSheet.insertRule(r, 0));
     return {
       ...acc,
       [curr]: className,
@@ -431,9 +434,9 @@ export function createUseStyles(style: Style) {
     // here we only apply "dynamic" styles aka the ones that are declared via func
     useLayoutEffect(() => {
       if (dynamicRules.length === 0) return undefined;
-      const rules = dynamicRules.map((r) => StyleMeta.sheet.insertRule(r, 0));
+      const rules = dynamicRules.map((r) => StyleMeta.dynamicSheet.insertRule(r, 0));
       return () => {
-        rules.forEach((r) => StyleMeta.sheet.deleteRule(r));
+        rules.forEach((r) => StyleMeta.dynamicSheet.deleteRule(r));
       };
     }, [JSON.stringify(dynamicRules)]);
 
