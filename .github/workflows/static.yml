@@ -38,6 +38,7 @@ jobs:
         uses: actions/configure-pages@v4
       - name: Build
         run: |
+          export BASE_URL="https://cl0v1s.github.io/Canaille/"
           corepack enable
           yarn
           yarn laddle-build
