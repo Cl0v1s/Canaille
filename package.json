@@ -16,6 +16,7 @@
     "prettier": "npx prettier --write .",
     "lint": "npx eslint --fix .",
     "laddle": "npx yarn ladle serve",
+    "laddle-build": "npx yarn ladle build",
     "story": "node toolchain/create-story.mjs"
   },
   "author": "",
