@@ -59,6 +59,8 @@ const useStyle = createUseStyles({
       color: "var(--text-color)",
       borderRadius: "var(--border-radius)",
 
+      transition: "box-shadow 0.2s ease",
+
       "&>input": {
         border: 0,
         fontSize: "var(--font-size)",
