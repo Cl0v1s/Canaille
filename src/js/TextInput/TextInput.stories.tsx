@@ -2,6 +2,9 @@ import type { Story } from "@ladle/react"
 import React from "react"
 import { TextInput } from "./common.tsx"
 
+import '../../scss/google-fonts.scss';
+
+
 export const TextInputStory: Story = (props) => (
   <TextInput {...props} />
 )

@@ -23,12 +23,25 @@ function stateCSS(state: string): React.CSSProperties {
 }
 
 function sizeCSS(size: number): React.CSSProperties {
-    return {
+    switch(size) {
+        default:
+        case 100: {
+            return {
 
+            }
+        }
+        case 50: {
+            return {
+                "--display": "inline-block",
+                "--label-display": "none",
+                "--padding-top": "var(--spacing-2)",
+            } as React.CSSProperties
+        }
     }
 }
 
 export const textInputCSS = (state, size) => merge({
+    "--display": "block",
     "--box-shadow": "unset",
     "--background-color": "var(--additional-primary)",
     "--border": "2px solid var(--grey-100)",
@@ -36,10 +49,11 @@ export const textInputCSS = (state, size) => merge({
     "--padding-left": "var(--spacing-3)",
     "--padding-right": "var(--spacing-3)",
     "--padding-bottom": "var(--spacing-2)",
-    "--padding-top": "20px",
+    "--padding-top": "18px",
     "--font-size": "var(--text-100)",
     "--text-color": "var(--grey-100)",
 
+    "--label-display": "block",
     "--label-background-color": "var(--brand-primary)",
     "--label-padding-x": "var(--spacing-2)",
     "--label-padding-y": "var(--spacing-1)",

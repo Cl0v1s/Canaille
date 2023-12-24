@@ -21,6 +21,7 @@ const useStyle = createUseStyles({
     
   },
   textInput: {
+    "--display": "unset",
     "--background-color": "unset",
     "--border": "unset",
     "--box-shadow": "unset",
@@ -33,6 +34,7 @@ const useStyle = createUseStyles({
     "--border-radius": "unset",
     "--font-size": "unset",
 
+    "--label-display": "unset",
     "--label-color": "unset",
     "--label-background-color": "unset",
     "--label-padding": "unset",
@@ -45,9 +47,13 @@ const useStyle = createUseStyles({
 
     border: 0,
     padding: 0,
+    display: "var(--display)",
+    minWidth: 0,
 
     "&>label": {
       position: "relative",
+      display: "var(--display)",
+      width: "100%",
 
       paddingBottom: "var(--padding-bottom)",
       paddingTop: "var(--padding-top)",
@@ -62,17 +68,21 @@ const useStyle = createUseStyles({
       transition: "box-shadow 0.2s ease",
 
       "&>input": {
+        width: "100%",
+        display: "var(--display)",
+        fontFamily: "inherit",
         border: 0,
         fontSize: "var(--font-size)",
         backgroundColor: "transparent",
         "&::placeholder": {
           color: "var(--placeholder-color)",
+          fontFamily: "inherit",
         }
       } as React.CSSProperties,
 
       "&>[aria-roledescription=label]": {
+        display: "var(--label-display)",
         fontSize: "var(--label-font-size)",
-        display: "inline-block",
         position: "absolute",
         top: 0,
         border: "var(--label-border)",
@@ -252,7 +262,6 @@ const TextInput = React.forwardRef(
     const input = React.useRef<HTMLInputElement>(null);
     const uid = React.useId();
     const internalId = id || uid;
-
     const {
       error,
       setError,
