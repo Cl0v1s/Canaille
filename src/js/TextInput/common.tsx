@@ -1,13 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
-/**
- * TextInput
- *
- * A small text input. Used to allow users to type short texts.
- * For long ones, prefer Textarea component
- *
- * Styleguide Inputs.TextInput
- */
-
 import React from 'react';
 
 import { ICommonProps } from './../types/ICommonProps';
@@ -18,64 +8,89 @@ import { Error} from './../Error/common';
 import { Icon, IIcon } from '../Icon/common';
 import { useValidation } from './../helpers/form/form';
 
+import { textInputCSS } from './style';
+
+import './../../scss/index.scss';
+
 export const TEXTINPUTICON_DISPLAYNAME = 'TextInputIcon';
 export const TEXTINPUTERASE_DISPLAYNAME = 'TextInputErase';
 export const TEXTINPUTSELECT_DISPLAYNAME = 'TextInputSelect';
 
 const useStyle = createUseStyles({
   icon: {
-    display: 'flex',
-    background: 'none',
-    padding: 0,
-    border: 0,
-    cursor: 'pointer',
-    color: 'var(--grey-100)',
-
-    '&>div[aria-label="erase"]': {
-      transition: 'background 0.110s ease-in-out',
-      borderRadius: 'var(--rounded-25)',
-    },
-    // Hover effect only on the erase icon
-    '&>div[aria-label="erase"]:hover': {
-      background: 'rgba(34, 45, 57, 0.10)',
-    },
-    // Active effect only on the erase icon
-    '&>div[aria-label="erase"]:active': {
-      background: 'rgba(34, 45, 57, 0.20)',
-    },
+    
   },
   textInput: {
-    border: 'none',
+    "--background-color": "unset",
+    "--border": "unset",
+    "--box-shadow": "unset",
+    "--placeholder-color": "unset",
+    "--text-color": "unset",
+    "--padding-top": "unset",
+    "--padding-bottom": "unset",
+    "--padding-left": "unset",
+    "--padding-right": "unset",
+    "--border-radius": "unset",
+    "--font-size": "unset",
+
+    "--label-color": "unset",
+    "--label-background-color": "unset",
+    "--label-padding": "unset",
+    "--label-border-radius": "unset",
+    "--label-border": "unset",
+    "--label-box-shadow": "unset",
+    "--label-padding-x": "unset",
+    "--label-padding-y": "unset",
+    "--label-font-size": "unset",
+
+    border: 0,
     padding: 0,
-    minInlineSize: 0,
-    fontFamily: 'var(--font-family-primary)',
 
-    '& [role=combobox] > [role=alert]': {
-      display: 'none',
-    },
+    "&>label": {
+      position: "relative",
 
-    '&>label': {
-      position: 'relative',
-      display: 'flex',
-      gap: 'var(--spacing-2)',
-      '&>input': {
-        minWidth: 0,
-        border: 'none',
-        fontFamily: 'var(--font-family-primary)',
-        fontSize: 'inherit',
-        outline: 'none',
+      paddingBottom: "var(--padding-bottom)",
+      paddingTop: "var(--padding-top)",
+      paddingLeft: "var(--padding-left)",
+      paddingRight: "var(--padding-right)",
+      border: "var(--border)",
+      boxShadow: "var(--box-shadow)",
+      backgroundColor: "var(--background-color)",
+      color: "var(--text-color)",
+      borderRadius: "var(--border-radius)",
 
-        '&::placeholder': {
-          transition: 'color 0.2s ease 0.2s',
-        },
-      },
+      "&>input": {
+        border: 0,
+        fontSize: "var(--font-size)",
+        backgroundColor: "transparent",
+        "&::placeholder": {
+          color: "var(--placeholder-color)",
+        }
+      } as React.CSSProperties,
 
-      '&>[aria-roledescription="label"]': {
-        position: 'absolute',
-        transition: 'transform 110ms ease-out, background 0ms ease-out 110ms',
-      },
-    },
-  },
+      "&>[aria-roledescription=label]": {
+        fontSize: "var(--label-font-size)",
+        display: "inline-block",
+        position: "absolute",
+        top: 0,
+        border: "var(--label-border)",
+        left: "var(--padding-left)",
+        transform: "translateY(-50%)",
+        color: "var(--label-color)",
+        backgroundColor: "var(--label-background-color)",
+        padding: "var(--label-padding)",
+        borderRadius: "var(--label-border-radius)",
+        boxShadow: "var(--label-box-shadow)",
+        paddingLeft: "var(--label-padding-x)",
+        paddingRight: "var(--label-padding-x)",
+        paddingTop: "var(--label-padding-y)",
+        paddingBottom: "var(--label-padding-y)",
+      } as React.CSSProperties,
+
+  } as React.CSSProperties,
+
+  } as React.CSSProperties,
+  canaille: ({ state, size }) => textInputCSS(state, size),
 });
 
 interface ITextInputContext {
@@ -191,13 +206,11 @@ export interface ITextInputBase extends ICommonProps, IFormProps {
   children?:
     | Array<React.ReactElement<unknown, typeof TextInputIcon>>
     | React.ReactElement<unknown, typeof TextInputIcon>;
-  /**
-   * All other props can be passed to the input
-   */
-  [x: string]: any;
+  state?: "default" | "hover" | "focus",
+  size?: 100 | 50,
 }
 
-const TextInputBase = React.forwardRef(
+const TextInput = React.forwardRef(
   (
     {
       autofocus,
@@ -227,11 +240,13 @@ const TextInputBase = React.forwardRef(
       pattern,
       step,
       children,
+      size = 100,
+      state = "default",
       ...rest
     }: ITextInputBase,
     ref
   ) => {
-    const { textInput } = useStyle();
+    const { textInput, canaille } = useStyle({ state, size });
     const input = React.useRef<HTMLInputElement>(null);
     const uid = React.useId();
     const internalId = id || uid;
@@ -274,6 +289,7 @@ const TextInputBase = React.forwardRef(
     }, [children]);
 
     const onErase = React.useCallback(() => {
+      if(!input.current) return;
       input.current.value = '';
       const event = new Event('change', { bubbles: true });
       Object.defineProperty(event, 'target', { writable: false, value: input.current });
@@ -286,7 +302,7 @@ const TextInputBase = React.forwardRef(
         <fieldset
           aria-invalid={!!error}
           ref={ref as React.Ref<HTMLFieldSetElement>}
-          className={`${textInput} ${className}`}
+          className={`${textInput} ${canaille} ${className}`}
           style={style}
           data-testid={testId}
         >
@@ -332,6 +348,5 @@ const TextInputBase = React.forwardRef(
   }
 );
 
-TextInputBase.displayName = 'TextInputBase';
 
-export { TextInputBase, TextInputIcon, TextInputBefore };
+export { TextInput, TextInputIcon, TextInputBefore };
