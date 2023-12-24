@@ -3,4 +3,5 @@
 
 :root {
   @include vars.variables();
+  font-family: var(--font-family-primary);
 }

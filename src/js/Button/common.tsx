@@ -4,7 +4,6 @@ import { ICommonProps } from '../types/ICommonProps';
 import { createUseStyles } from '../createUseStyles';
 import { buttonCSS } from './style';
 import '../../scss/index.scss';
-// Button base component
 
 export interface IButton extends ICommonProps {
   htmlType?: 'button' | 'submit';
