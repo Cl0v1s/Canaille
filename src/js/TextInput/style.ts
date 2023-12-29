@@ -41,7 +41,7 @@ function sizeCSS(size: number): React.CSSProperties {
 }
 
 export const textInputCSS = (state, size) => merge({
-    "--display": "block",
+    "--display": "flex",
     "--box-shadow": "unset",
     "--background-color": "var(--additional-primary)",
     "--border": "2px solid var(--grey-100)",
