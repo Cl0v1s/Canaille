@@ -5,8 +5,8 @@ import { IFormProps } from './../types/IFormProps';
 import { createUseStyles } from './../createUseStyles';
 
 import { Error} from './../Error/common';
-import { Icon, IIcon } from '../Icon/common';
 import { useValidation } from './../helpers/form/form';
+import { TablerIconsProps } from '@tabler/icons-react';
 
 import { textInputCSS } from './style';
 
@@ -17,9 +17,6 @@ export const TEXTINPUTERASE_DISPLAYNAME = 'TextInputErase';
 export const TEXTINPUTSELECT_DISPLAYNAME = 'TextInputSelect';
 
 const useStyle = createUseStyles({
-  icon: {
-    
-  },
   textInput: {
     "--display": "unset",
     "--background-color": "unset",
@@ -54,6 +51,8 @@ const useStyle = createUseStyles({
       position: "relative",
       display: "var(--display)",
       width: "100%",
+
+      alignItems: "center",
 
       paddingBottom: "var(--padding-bottom)",
       paddingTop: "var(--padding-top)",
@@ -127,39 +126,7 @@ const TextInputBefore = ({ children }: ITextInputBefore) => <>{children}</>;
 
 TextInputBefore.displayName = TEXTINPUTBEFORE_DISPLAYNAME;
 
-interface ITextInputIcon extends IIcon {
-  onClick?: React.MouseEventHandler;
-}
-
-const TextInputIcon = React.forwardRef(
-  ({ className = '', color, size = '16px', onClick, icon: svgIcon, ...rest }: ITextInputIcon, ref) => {
-    const { icon } = useStyle();
-
-    const content = React.useMemo(
-      () => <Icon {...rest} icon={svgIcon} color={color || true} size={size} />,
-      [svgIcon, color, size]
-    );
-
-    return onClick ? (
-      <button
-        className={`${icon} ${className}`}
-        type="button"
-        onClick={onClick}
-        ref={ref as React.Ref<HTMLButtonElement>}
-      >
-        {content}
-      </button>
-    ) : (
-      <div className={`${icon} ${className}`} ref={ref as React.Ref<HTMLDivElement>}>
-        {content}
-      </div>
-    );
-  }
-);
-
-TextInputIcon.displayName = 'TextInputIcon';
-
-export interface ITextInputBase extends ICommonProps, IFormProps {
+export interface ITextInput extends ICommonProps, IFormProps {
   /**
    * Input type
    */
@@ -216,8 +183,8 @@ export interface ITextInputBase extends ICommonProps, IFormProps {
    * Optional additional elements
    */
   children?:
-    | Array<React.ReactElement<unknown, typeof TextInputIcon>>
-    | React.ReactElement<unknown, typeof TextInputIcon>;
+    | Array<React.ReactElement<unknown, React.JSXElementConstructor<TablerIconsProps>>>
+    | React.ReactElement<unknown, React.JSXElementConstructor<TablerIconsProps>>;
   state?: "default" | "hover" | "focus",
   size?: 100 | 50,
 }
@@ -255,7 +222,7 @@ const TextInput = React.forwardRef(
       size = 100,
       state = "default",
       ...rest
-    }: ITextInputBase,
+    }: ITextInput,
     ref
   ) => {
     const { textInput, canaille } = useStyle({ state, size });
@@ -274,7 +241,7 @@ const TextInput = React.forwardRef(
       onInvalid,
     });
 
-    const { before, icons, erase, select, others } = React.useMemo(() => {
+    const { before, select, others } = React.useMemo(() => {
       const wIcons: Array<React.ReactNode> = [];
       const wErase: Array<React.ReactNode> = [];
       const wSelect: Array<React.ReactNode> = [];
@@ -282,10 +249,8 @@ const TextInput = React.forwardRef(
       const wBefore: Array<React.ReactNode> = [];
 
       React.Children.toArray(children).forEach((c) => {
-        const child = c as React.ReactElement<unknown, typeof TextInputIcon>;
-        if (child.type?.displayName === TEXTINPUTICON_DISPLAYNAME) wIcons.push(child);
-        else if (child.type?.displayName === TEXTINPUTERASE_DISPLAYNAME) wErase.push(child);
-        else if (child.type?.displayName === TEXTINPUTSELECT_DISPLAYNAME) wSelect.push(child);
+        const child = c as React.ReactElement<unknown, any>;
+        if (child.type?.displayName === TEXTINPUTSELECT_DISPLAYNAME) wSelect.push(child);
         else if (child.type?.displayName === TEXTINPUTBEFORE_DISPLAYNAME) wBefore.push(child);
         else wOthers.push(child);
       });
@@ -347,8 +312,6 @@ const TextInput = React.forwardRef(
               onInput={onInput}
             />
             {label && <span aria-roledescription="label">{label}</span>}
-            {erase}
-            {icons}
             {select}
             {others}
           </label>
@@ -360,4 +323,4 @@ const TextInput = React.forwardRef(
 );
 
 
-export { TextInput, TextInputIcon, TextInputBefore };
+export { TextInput, TextInputBefore };

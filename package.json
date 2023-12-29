@@ -27,6 +27,7 @@
     "@babel/preset-react": "^7.23.3",
     "@babel/preset-typescript": "^7.23.3",
     "@react-docgen/cli": "^2.0.1",
+    "@tabler/icons-react": "^2.44.0",
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.18",
     "babel-loader": "^9.1.3",
