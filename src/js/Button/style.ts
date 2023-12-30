@@ -28,18 +28,19 @@ function variantCSS(variant, state) {
   }
 }
 
-function stateCSS(state, variant) {
+function stateCSS(state, size, variant) {
   switch (state) {
     default:
     case "default": {
       return {
-        "--box-shadow": "var(--dp-25)",
+        "--box-shadow": size === 50 ? "var(--dp-25)" : "var(--dp-75)",
       };
     }
     case "hover": {
       return {
-        "--box-shadow": "var(--dp-75)",
+        "--box-shadow": size === 50 ? "var(--dp-75)" : "var(--dp-100)",
         transform: "translate(2px, -2px)",
+        ...variant === "secondary" ? { "--background-color": "var(--brand-primary)" } : {}
       };
     }
   }
@@ -72,9 +73,9 @@ export function buttonCSS(variant, state, size) {
       "--text-color": "var(--grey-100)",
       transition: "all 0.2s ease",
 
-      "&:hover": variant !== "secondary" ? stateCSS("hover", variant) : {},
+      "&:hover": stateCSS("hover", size, variant),
     } as React.CSSProperties,
-    stateCSS(state, variant),
+    stateCSS(state, size, variant),
     variantCSS(variant, state),
     sizeCSS(size),
   );
