@@ -4,6 +4,7 @@ import fs from 'fs';
 import { exit } from 'process';
 import path from 'path';
 import { format } from 'prettier';
+import FindAllDefinitionsResolver from 'react-docgen/dist/resolver/FindAllDefinitionsResolver.js';
 
 process.argv.shift();
 process.argv.shift();
@@ -27,8 +28,10 @@ function generateArgs(props) {
 function parseArgsType(type) {
   switch (type.tsType.name) {
     case 'union': {
+      const options = type.tsType.elements.map((e) => eval(e.value)).filter((e) => !!e);
+      if(options.length === 0) return null;
       return {
-        options: type.tsType.elements.map((e) => eval(e.value)),
+        options,
         control: { type: 'select' },
         defaultValue: eval(type.defaultValue?.value),
       };
@@ -73,6 +76,6 @@ async function generateStory(name, props) {
 }
 
 const file = fs.readFileSync(filePath);
-const docs = parse(file.toString(), { filename: filePath });
+const docs = parse(file.toString(), { filename: filePath, resolver: new FindAllDefinitionsResolver() });
 
 docs.forEach((doc) => generateStory(doc.displayName, doc.props));
