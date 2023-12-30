@@ -187,7 +187,7 @@ $h-line-heights: [];
 // Liste de tous les radius disponibles
 // Documentation: Utilities/Borders
 $rounded-0: 0;
-$rounded-25: unset;
+$rounded-25: 4px;
 $rounded-50: 8px;
 $rounded-75: unset;
 $rounded-100: 16px;
@@ -196,6 +196,7 @@ $rounded-150: unset;
 $rounded-200: 32px;
 $rounded-sizes: (
   "rounded-0": $rounded-0,
+  "rounded-25": $rounded-25,
   "rounded-50": $rounded-50,
   "rounded-100": $rounded-100,
   "rounded-200": $rounded-200,

@@ -73,6 +73,7 @@ const useStyle = createUseStyles({
         border: 0,
         fontSize: "var(--font-size)",
         backgroundColor: "transparent",
+        color: "inherit",
         "&::placeholder": {
           color: "var(--placeholder-color)",
           fontFamily: "inherit",
