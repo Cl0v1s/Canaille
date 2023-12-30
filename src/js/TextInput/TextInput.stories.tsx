@@ -22,5 +22,4 @@ TextInputStory.argTypes = {
     defaultValue: "text",
   },
   state: { options: ["default", "hover", "focus"], control: { type: "select" } },
-  size: { options: [100, 50], control: { type: "select" } },
 }

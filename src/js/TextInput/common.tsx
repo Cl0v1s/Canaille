@@ -101,7 +101,7 @@ const useStyle = createUseStyles({
   } as React.CSSProperties,
 
   } as React.CSSProperties,
-  canaille: ({ state, size }) => textInputCSS(state, size),
+  canaille: ({ state }) => textInputCSS(state),
 });
 
 interface ITextInputContext {
@@ -186,7 +186,6 @@ export interface ITextInput extends ICommonProps, IFormProps {
     | Array<React.ReactElement<unknown, React.JSXElementConstructor<TablerIconsProps>>>
     | React.ReactElement<unknown, React.JSXElementConstructor<TablerIconsProps>>;
   state?: "default" | "hover" | "focus",
-  size?: 100 | 50,
 }
 
 const TextInput = React.forwardRef(
@@ -219,13 +218,12 @@ const TextInput = React.forwardRef(
       pattern,
       step,
       children,
-      size = 100,
       state = "default",
       ...rest
     }: ITextInput,
     ref
   ) => {
-    const { textInput, canaille } = useStyle({ state, size });
+    const { textInput, canaille } = useStyle({ state });
     const input = React.useRef<HTMLInputElement>(null);
     const uid = React.useId();
     const internalId = id || uid;

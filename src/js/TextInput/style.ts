@@ -11,36 +11,18 @@ function stateCSS(state: string): React.CSSProperties {
         }
         case "hover": {
             return {
-                "--box-shadow": "var(--dp-25)",
+                "--box-shadow": "var(--dp-75)",
             } as React.CSSProperties
         }
         case "focus": {
             return {
-                    "--box-shadow": "var(--dp-75)",
+                    "--box-shadow": "var(--dp-100)",
             } as React.CSSProperties
         }
     }
 }
 
-function sizeCSS(size: number): React.CSSProperties {
-    switch(size) {
-        default:
-        case 100: {
-            return {
-
-            }
-        }
-        case 50: {
-            return {
-                "--display": "inline-block",
-                "--label-display": "none",
-                "--padding-top": "var(--spacing-2)",
-            } as React.CSSProperties
-        }
-    }
-}
-
-export const textInputCSS = (state, size) => merge({
+export const textInputCSS = (state) => merge({
     "--display": "flex",
     "--box-shadow": "unset",
     "--background-color": "var(--additional-primary)",
@@ -69,4 +51,4 @@ export const textInputCSS = (state, size) => merge({
     "&:hover": stateCSS("hover"),
     "&:focus, &:focus-within": stateCSS("focus"),
 
-}, stateCSS(state), sizeCSS(size)); 
+}, stateCSS(state)); 
