@@ -69,8 +69,8 @@ export function useValidation({
   checkValidity = undefined,
   onInvalid = undefined,
 }: {
-  root: React.RefObject<HTMLEditableElement | HTMLFieldSetElement>;
-  validateOnChange: boolean;
+  root: React.MutableRefObject<HTMLEditableElement | HTMLFieldSetElement>;
+  validateOnChange: boolean | undefined;
   checkValidity: ((i: unknown) => string | undefined) | undefined;
   onInvalid: React.FormEventHandler<HTMLEditableElement | HTMLFieldSetElement> | undefined;
 }) {
