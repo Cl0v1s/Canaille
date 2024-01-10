@@ -14,9 +14,6 @@ const SIZES = {
 type color = string | 'transparent' | 'current';
 
 export interface IIcon extends ICommonProps, IAccessibilityProps {
-  /**
-   * SVG icon to use, must be imported from `@synapse-medicine/boto/goodmed/icons` or `@synapse-medicine/boto/platform/icons`
-   */
   icon: string;
   /**
    * Icon size (10px, 16px, 20px, 30px). Custom size (css values) can be passed too (eg: '23px').
