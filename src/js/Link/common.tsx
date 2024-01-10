@@ -12,6 +12,7 @@ const useStyle = createUseStyles({
         "--font-size": "unset",
         "--line-height": "unset",
 
+        transition: "all 0.4s ease",
         border: "none",
         textDecoration: "var(--text-decoration)",
         backgroundColor: "var(--background-color)",
