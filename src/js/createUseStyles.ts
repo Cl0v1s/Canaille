@@ -62,9 +62,9 @@ export const StyleMeta: {
   layerSheet: undefined as unknown as Sheet,
   staticSheet: undefined as unknown as Sheet,
   getServerSideStyle: () =>
-    `${StyleMeta.layerSheet.style.join("\n\n")}\n\n${StyleMeta.staticSheet.style.join(
+    `${StyleMeta.layerSheet.style.join(
       "\n\n",
-    )}`,
+    )}\n\n${StyleMeta.staticSheet.style.join("\n\n")}`,
 };
 
 /**
@@ -434,7 +434,9 @@ export function createUseStyles(style: Style) {
     // here we only apply "dynamic" styles aka the ones that are declared via func
     useLayoutEffect(() => {
       if (dynamicRules.length === 0) return undefined;
-      const rules = dynamicRules.map((r) => StyleMeta.dynamicSheet.insertRule(r, 0));
+      const rules = dynamicRules.map((r) =>
+        StyleMeta.dynamicSheet.insertRule(r, 0),
+      );
       return () => {
         rules.forEach((r) => StyleMeta.dynamicSheet.deleteRule(r));
       };

@@ -40,7 +40,9 @@ function stateCSS(state, size, variant) {
       return {
         "--box-shadow": size === 50 ? "var(--dp-75)" : "var(--dp-100)",
         transform: "translate(2px, -2px)",
-        ...variant === "secondary" ? { "--background-color": "var(--brand-primary)" } : {}
+        ...(variant === "secondary"
+          ? { "--background-color": "var(--brand-primary)" }
+          : {}),
       };
     }
   }

@@ -1,13 +1,13 @@
-import type { Story } from "@ladle/react"
-import React from "react"
-import { Checkbox } from "./common.tsx"
+import type { Story } from "@ladle/react";
+import React from "react";
+import { Checkbox } from "./common.tsx";
 
 export const CheckboxStory: Story = (props) => (
   <Checkbox {...props}>Test</Checkbox>
-)
-CheckboxStory.storyName = "Checkbox"
+);
+CheckboxStory.storyName = "Checkbox";
 
-CheckboxStory.args = { state: "default" }
+CheckboxStory.args = { state: "default" };
 CheckboxStory.argTypes = {
   state: {
     options: ["default", "hover", "checked"],
@@ -16,6 +16,6 @@ CheckboxStory.argTypes = {
   },
   required: {
     options: [true, false],
-    control: { type: "radio" }
-  }
-}
+    control: { type: "radio" },
+  },
+};

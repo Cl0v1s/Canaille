@@ -1,20 +1,20 @@
-import React from 'react';
+import React from "react";
 
-import { ICommonProps } from './../types/ICommonProps';
-import { IFormProps } from './../types/IFormProps';
-import { createUseStyles } from './../createUseStyles';
+import { ICommonProps } from "./../types/ICommonProps";
+import { IFormProps } from "./../types/IFormProps";
+import { createUseStyles } from "./../createUseStyles";
 
-import { Error} from './../Error/common';
-import { useValidation } from './../helpers/form/form';
-import { TablerIconsProps } from '@tabler/icons-react';
+import { Error } from "./../Error/common";
+import { useValidation } from "./../helpers/form/form";
+import { TablerIconsProps } from "@tabler/icons-react";
 
-import { textInputCSS } from './style';
+import { textInputCSS } from "./style";
 
-import './../../scss/index.scss';
+import "./../../scss/index.scss";
 
-export const TEXTINPUTICON_DISPLAYNAME = 'TextInputIcon';
-export const TEXTINPUTERASE_DISPLAYNAME = 'TextInputErase';
-export const TEXTINPUTSELECT_DISPLAYNAME = 'TextInputSelect';
+export const TEXTINPUTICON_DISPLAYNAME = "TextInputIcon";
+export const TEXTINPUTERASE_DISPLAYNAME = "TextInputErase";
+export const TEXTINPUTSELECT_DISPLAYNAME = "TextInputSelect";
 
 const useStyle = createUseStyles({
   textInput: {
@@ -77,7 +77,7 @@ const useStyle = createUseStyles({
         "&::placeholder": {
           color: "var(--placeholder-color)",
           fontFamily: "inherit",
-        }
+        },
       } as React.CSSProperties,
 
       "&>[aria-roledescription=label]": {
@@ -98,9 +98,7 @@ const useStyle = createUseStyles({
         paddingTop: "var(--label-padding-y)",
         paddingBottom: "var(--label-padding-y)",
       } as React.CSSProperties,
-
-  } as React.CSSProperties,
-
+    } as React.CSSProperties,
   } as React.CSSProperties,
   canaille: ({ state }) => textInputCSS(state),
 });
@@ -117,7 +115,7 @@ export const TextInputContext = React.createContext<ITextInputContext>({
   onErase: () => null,
 });
 
-const TEXTINPUTBEFORE_DISPLAYNAME = 'TextInputBefore';
+const TEXTINPUTBEFORE_DISPLAYNAME = "TextInputBefore";
 
 interface ITextInputBefore {
   children: React.ReactNode;
@@ -131,7 +129,14 @@ export interface ITextInput extends ICommonProps, IFormProps {
   /**
    * Input type
    */
-  htmlType?: 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url';
+  htmlType?:
+    | "email"
+    | "number"
+    | "password"
+    | "search"
+    | "tel"
+    | "text"
+    | "url";
   /**
    * Placeholder content to show in the TextInput
    */
@@ -184,9 +189,17 @@ export interface ITextInput extends ICommonProps, IFormProps {
    * Optional additional elements
    */
   children?:
-    | Array<React.ReactElement<unknown, React.JSXElementConstructor<TablerIconsProps>>>
-    | React.ReactElement<unknown, React.JSXElementConstructor<TablerIconsProps>>;
-  state?: "default" | "hover" | "focus",
+    | Array<
+        React.ReactElement<
+          unknown,
+          React.JSXElementConstructor<TablerIconsProps>
+        >
+      >
+    | React.ReactElement<
+        unknown,
+        React.JSXElementConstructor<TablerIconsProps>
+      >;
+  state?: "default" | "hover" | "focus";
 }
 
 const TextInput = React.forwardRef(
@@ -212,7 +225,7 @@ const TextInput = React.forwardRef(
       testId,
       validateOnChange,
       value,
-      htmlType: type = 'text',
+      htmlType: type = "text",
       list,
       max,
       min,
@@ -222,7 +235,7 @@ const TextInput = React.forwardRef(
       state = "default",
       ...rest
     }: ITextInput,
-    ref
+    ref,
   ) => {
     const { textInput, canaille } = useStyle({ state });
     const input = React.useRef<HTMLInputElement>(null);
@@ -249,8 +262,10 @@ const TextInput = React.forwardRef(
 
       React.Children.toArray(children).forEach((c) => {
         const child = c as React.ReactElement<unknown, any>;
-        if (child.type?.displayName === TEXTINPUTSELECT_DISPLAYNAME) wSelect.push(child);
-        else if (child.type?.displayName === TEXTINPUTBEFORE_DISPLAYNAME) wBefore.push(child);
+        if (child.type?.displayName === TEXTINPUTSELECT_DISPLAYNAME)
+          wSelect.push(child);
+        else if (child.type?.displayName === TEXTINPUTBEFORE_DISPLAYNAME)
+          wBefore.push(child);
         else wOthers.push(child);
       });
 
@@ -264,16 +279,21 @@ const TextInput = React.forwardRef(
     }, [children]);
 
     const onErase = React.useCallback(() => {
-      if(!input.current) return;
-      input.current.value = '';
-      const event = new Event('change', { bubbles: true });
-      Object.defineProperty(event, 'target', { writable: false, value: input.current });
+      if (!input.current) return;
+      input.current.value = "";
+      const event = new Event("change", { bubbles: true });
+      Object.defineProperty(event, "target", {
+        writable: false,
+        value: input.current,
+      });
       input.current.dispatchEvent(event);
       if (onChange) onChange(event as unknown as React.ChangeEvent);
     }, [onChange]);
 
     return (
-      <TextInputContext.Provider value={{ disabled: disabled || false, setError, onErase }}>
+      <TextInputContext.Provider
+        value={{ disabled: disabled || false, setError, onErase }}
+      >
         <fieldset
           aria-invalid={!!error}
           ref={ref as React.Ref<HTMLFieldSetElement>}
@@ -296,7 +316,7 @@ const TextInput = React.forwardRef(
               name={name}
               onChange={onChange}
               // we set " " to allow the css :placeholder-shown to work even when no placeholder
-              placeholder={placeholder || ' '}
+              placeholder={placeholder || " "}
               readOnly={readonly}
               required={required}
               spellCheck={spellcheck}
@@ -318,8 +338,7 @@ const TextInput = React.forwardRef(
         </fieldset>
       </TextInputContext.Provider>
     );
-  }
+  },
 );
-
 
 export { TextInput, TextInputBefore };

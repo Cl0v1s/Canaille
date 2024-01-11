@@ -1,10 +1,10 @@
 /* eslint-disable no-eval */
-import { parse } from 'react-docgen';
-import fs from 'fs';
-import { exit } from 'process';
-import path from 'path';
-import { format } from 'prettier';
-import FindAllDefinitionsResolver from 'react-docgen/dist/resolver/FindAllDefinitionsResolver.js';
+import { parse } from "react-docgen";
+import fs from "fs";
+import { exit } from "process";
+import path from "path";
+import { format } from "prettier";
+import FindAllDefinitionsResolver from "react-docgen/dist/resolver/FindAllDefinitionsResolver.js";
 
 process.argv.shift();
 process.argv.shift();
@@ -27,16 +27,19 @@ function generateArgs(props) {
 
 function parseArgsType(type) {
   switch (type.tsType.name) {
-    case 'union': {
-      const options = type.tsType.elements.map((e) => eval(e.value)).filter((e) => !!e);
-      if(options.length === 0) return null;
+    case "union": {
+      const options = type.tsType.elements
+        .map((e) => eval(e.value))
+        .filter((e) => !!e);
+      if (options.length === 0) return null;
       return {
         options,
-        control: { type: 'select' },
+        control: { type: "select" },
         defaultValue: eval(type.defaultValue?.value),
       };
     }
-    default: return null;
+    default:
+      return null;
   }
 }
 
@@ -52,7 +55,7 @@ function generateArgsType(props) {
 }
 
 async function generateStory(name, props) {
-  const hasChildren = Object.keys(props).indexOf('children') !== -1;
+  const hasChildren = Object.keys(props).indexOf("children") !== -1;
   const fileName = filePath.split(path.sep).pop();
 
   const output = `
@@ -60,7 +63,9 @@ async function generateStory(name, props) {
         import React from 'react';
         import { ${name} } from './${fileName}';
 
-        export const ${name}Story: Story = (props) => <${name} {...props}>${hasChildren ? 'Test' : ''}</${name}>;
+        export const ${name}Story: Story = (props) => <${name} {...props}>${
+          hasChildren ? "Test" : ""
+        }</${name}>;
         ${name}Story.storyName = "${name}";
 
         ${name}Story.args = ${JSON.stringify(generateArgs(props))};
@@ -76,6 +81,9 @@ async function generateStory(name, props) {
 }
 
 const file = fs.readFileSync(filePath);
-const docs = parse(file.toString(), { filename: filePath, resolver: new FindAllDefinitionsResolver() });
+const docs = parse(file.toString(), {
+  filename: filePath,
+  resolver: new FindAllDefinitionsResolver(),
+});
 
 docs.forEach((doc) => generateStory(doc.displayName, doc.props));

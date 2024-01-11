@@ -1,32 +1,35 @@
-import React from 'react';
-import { merge } from './../merge';
+import React from "react";
+import { merge } from "./../merge";
 
 function sizeCSS(size) {
-    if(size === 100) {
-        return {
-            "--font-size": "var(--text-100)",
-            "--line-height": "100%",
-        } as React.CSSProperties;
-    }
+  if (size === 100) {
     return {
-        "--font-size": "var(--text-50)",
-        "--line-height": "100%",
+      "--font-size": "var(--text-100)",
+      "--line-height": "100%",
     } as React.CSSProperties;
+  }
+  return {
+    "--font-size": "var(--text-50)",
+    "--line-height": "100%",
+  } as React.CSSProperties;
 }
 
 function stateCSS(state) {
-    if(state === "hover") {
-        return {
-            "--background-color": "var(--brand-primary)",
-        } as React.CSSProperties
-    }
+  if (state === "hover") {
     return {
-         
-    } as React.CSSProperties
+      "--background-color": "var(--brand-primary)",
+    } as React.CSSProperties;
+  }
+  return {} as React.CSSProperties;
 }
 
-export const link = ( state, size ) => merge({
-    "--text-decoration": "underline",
+export const link = (state, size) =>
+  merge(
+    {
+      "--text-decoration": "underline",
 
-    "&:hover": stateCSS("hover")
-} as React.CSSProperties, sizeCSS(size), stateCSS(state));
+      "&:hover": stateCSS("hover"),
+    } as React.CSSProperties,
+    sizeCSS(size),
+    stateCSS(state),
+  );

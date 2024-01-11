@@ -1,18 +1,22 @@
-import React from 'react';
-import { merge } from './../merge';
+import React from "react";
+import { merge } from "./../merge";
 
 function variantCSS(variant): React.CSSProperties {
-    if(variant === "dashed") {
-        return {
-            "--background": "none",
-        } as React.CSSProperties
-    } 
+  if (variant === "dashed") {
     return {
-        "--background": "var(--color)",
-    } as React.CSSProperties
-};
+      "--background": "none",
+    } as React.CSSProperties;
+  }
+  return {
+    "--background": "var(--color)",
+  } as React.CSSProperties;
+}
 
-export const line = (variant) => merge({
-    "--height": "2px",
-    "--color": "var(--grey-100)",
-} as React.CSSProperties, variantCSS(variant));
+export const line = (variant) =>
+  merge(
+    {
+      "--height": "2px",
+      "--color": "var(--grey-100)",
+    } as React.CSSProperties,
+    variantCSS(variant),
+  );

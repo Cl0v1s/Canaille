@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
-import { ICommonProps } from './../types/ICommonProps';
-import { IAccessibilityProps } from './../types/IAccessibilityProps';
-import { createUseStyles } from './../createUseStyles';
+import React from "react";
+import { ICommonProps } from "./../types/ICommonProps";
+import { IAccessibilityProps } from "./../types/IAccessibilityProps";
+import { createUseStyles } from "./../createUseStyles";
 
 const SIZES = {
   150: 30,
@@ -11,7 +11,7 @@ const SIZES = {
   50: 10,
 };
 
-type color = string | 'transparent' | 'current';
+type color = string | "transparent" | "current";
 
 export interface IIcon extends ICommonProps, IAccessibilityProps {
   icon: string;
@@ -43,21 +43,21 @@ export interface IIcon extends ICommonProps, IAccessibilityProps {
 
 const useStyles = createUseStyles({
   icon: ({ strokeWidth, size, colors, hoverColors }) => ({
-    display: 'inline-flex',
-    '--stroke-width': strokeWidth,
+    display: "inline-flex",
+    "--stroke-width": strokeWidth,
     width: size,
     height: size,
     ...colors,
 
-    '&:hover': {
+    "&:hover": {
       ...hoverColors,
     },
   }),
 });
 
 function parseColor(color: color | boolean) {
-  if (color === true || color === 'current') return 'currentColor';
-  if (color === 'transparent') return color;
+  if (color === true || color === "current") return "currentColor";
+  if (color === "transparent") return color;
   return `var(--${color})`;
 }
 
@@ -65,8 +65,8 @@ function colorize(color) {
   if (!color) return {};
   if (!Array.isArray(color)) {
     return {
-      '--icon-color-0': parseColor(color),
-      '--icon-color-1': parseColor(color),
+      "--icon-color-0": parseColor(color),
+      "--icon-color-1": parseColor(color),
     };
   }
   const result = {};
@@ -82,7 +82,7 @@ const Icon = React.forwardRef(
       id,
       ariaHidden = true,
       ariaLabel,
-      className = '',
+      className = "",
       icon,
       size = 100,
       color,
@@ -92,9 +92,12 @@ const Icon = React.forwardRef(
       role,
       hoverColor,
     }: IIcon,
-    ref
+    ref,
   ) => {
-    const actualSize = React.useMemo(() => (SIZES[size] ? `${SIZES[size]}px` : size), [size]);
+    const actualSize = React.useMemo(
+      () => (SIZES[size] ? `${SIZES[size]}px` : size),
+      [size],
+    );
 
     const colors = React.useMemo(() => colorize(color), [color]);
     const hoverColors = React.useMemo(() => colorize(hoverColor), [hoverColor]);
@@ -110,19 +113,19 @@ const Icon = React.forwardRef(
       <div
         role={role}
         ref={ref as React.Ref<HTMLDivElement>}
-        className={`${classes.icon} ${color ? 'icon-color' : ''} ${className}`}
+        className={`${classes.icon} ${color ? "icon-color" : ""} ${className}`}
         id={id}
         aria-hidden={ariaHidden}
-        aria-label={ariaLabel || 'Icon'}
+        aria-label={ariaLabel || "Icon"}
         dangerouslySetInnerHTML={{ __html: icon }}
         data-testid={testId}
         style={style}
       />
     );
-  }
+  },
 );
 
-export const ICON_DISPLAYNAME = 'Icon';
+export const ICON_DISPLAYNAME = "Icon";
 
 Icon.displayName = ICON_DISPLAYNAME;
 

@@ -8,21 +8,21 @@
  * Styleguide Selectors.Checkbox
  */
 
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo } from "react";
 
-import { ICommonProps } from './../types/ICommonProps';
-import { IFormProps } from './../types/IFormProps';
-import { createUseStyles } from './../createUseStyles';
-import { useValidation } from './../helpers/form/form';
-import { Error } from './../Error/common';
-import { checkbox } from './style';
+import { ICommonProps } from "./../types/ICommonProps";
+import { IFormProps } from "./../types/IFormProps";
+import { createUseStyles } from "./../createUseStyles";
+import { useValidation } from "./../helpers/form/form";
+import { Error } from "./../Error/common";
+import { checkbox } from "./style";
 
-import { IconCheck } from '@tabler/icons-react';
+import { IconCheck } from "@tabler/icons-react";
 
-import './../../scss/index.scss';
+import "./../../scss/index.scss";
 
 export interface ICheckboxBase extends ICommonProps, IFormProps {
-    state?: "default" | "hover" | "checked",
+  state?: "default" | "hover" | "checked";
   /**
    * Checkbox text content
    */
@@ -51,15 +51,15 @@ export interface ICheckboxBase extends ICommonProps, IFormProps {
 
 const useStyle = createUseStyles({
   variables: {
-    '--radius': 'unset',
-    '--border': 'unset',
-    '--font-size': 'unset',
-    '--height': 'unset',
-    '--width': 'unset',
-    '--background-color': 'unset',
-    '--label-color': 'unset',
-    '--box-shadow': 'unset',
-    '--pointer-events': 'auto',
+    "--radius": "unset",
+    "--border": "unset",
+    "--font-size": "unset",
+    "--height": "unset",
+    "--width": "unset",
+    "--background-color": "unset",
+    "--label-color": "unset",
+    "--box-shadow": "unset",
+    "--pointer-events": "auto",
     "--check-opacity": 0,
   } as React.CSSProperties,
   checkbox: {
@@ -69,30 +69,29 @@ const useStyle = createUseStyles({
     color: "var(--label-color)",
 
     "&>input": {
-        position: "absolute",
-        width: 0,
-        height: 0,
-        opacity: 0,
-        "& + div>svg": {
-            opacity: "var(--check-opacity)",
-        },
+      position: "absolute",
+      width: 0,
+      height: 0,
+      opacity: 0,
+      "& + div>svg": {
+        opacity: "var(--check-opacity)",
+      },
     },
     "&>span": {
-        userSelect: "none",
+      userSelect: "none",
     },
     "&>div": {
-        transition: "all 0.2s ease",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "var(--width)",
-        height: "var(--height)",
-        boxShadow: "var(--box-shadow)",
-        borderRadius: "var(--radius)",
-        border: "var(--border)",
-        backgroundColor: "var(--background-color)",
-    } as React.CSSProperties
-
+      transition: "all 0.2s ease",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      width: "var(--width)",
+      height: "var(--height)",
+      boxShadow: "var(--box-shadow)",
+      borderRadius: "var(--radius)",
+      border: "var(--border)",
+      backgroundColor: "var(--background-color)",
+    } as React.CSSProperties,
   } as React.CSSProperties,
   canaille: ({ state }) => checkbox(state),
 });
@@ -100,23 +99,23 @@ const useStyle = createUseStyles({
 const Checkbox = React.forwardRef(
   (
     {
-        state = "default",
-        className,
-        id,
-        testId,
-        style,
-        children,
-        onClick,
-        onChange,
-        disabled,
-        defaultChecked,
-        checked,
-        required,
-        validateOnChange,
-        checkValidity,
-        onInvalid,
+      state = "default",
+      className,
+      id,
+      testId,
+      style,
+      children,
+      onClick,
+      onChange,
+      disabled,
+      defaultChecked,
+      checked,
+      required,
+      validateOnChange,
+      checkValidity,
+      onInvalid,
     }: ICheckboxBase,
-    ref
+    ref,
   ) => {
     // Unique id, useful for testing
     const nameId = React.useId();
@@ -166,7 +165,7 @@ const Checkbox = React.forwardRef(
           onInvalid={onInvalidInternal}
         />
         <div>
-            <IconCheck aria-hidden />
+          <IconCheck aria-hidden />
         </div>
         {children && (
           <span>
@@ -177,9 +176,9 @@ const Checkbox = React.forwardRef(
         )}
       </label>
     );
-  }
+  },
 );
 
-Checkbox.displayName = 'Checkbox';
+Checkbox.displayName = "Checkbox";
 
 export { Checkbox };

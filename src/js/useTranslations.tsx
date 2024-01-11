@@ -1,5 +1,4 @@
-import React from 'react';
-
+import React from "react";
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 interface Translator extends Function {
@@ -24,7 +23,7 @@ interface TranslationContext {
 function correctJSON(keys) {
   const result = {};
   Object.keys(keys).forEach((key) => {
-    const parts: Array<string> = key.split('.');
+    const parts: Array<string> = key.split(".");
     let current = result;
     const last = parts.pop() as string;
     parts.forEach((part) => {
@@ -49,7 +48,7 @@ function interpolationAdapter(key, params = {}, { count = undefined } = {}) {
   let translation = this(count && count > 1 ? `${key}_plural` : key, params);
   // unifying interpolation system between counterpart and meteor i18n
   Object.keys(params).forEach((item) => {
-    const reg = new RegExp(`%\\(${item}\\)s`, 'g');
+    const reg = new RegExp(`%\\(${item}\\)s`, "g");
     translation = translation.replace(reg, params[item]);
   });
   return translation;
@@ -57,7 +56,7 @@ function interpolationAdapter(key, params = {}, { count = undefined } = {}) {
 
 const context: React.Context<TranslationContext> = React.createContext({
   __: {},
-  lang: 'fr-FR',
+  lang: "fr-FR",
 } as TranslationContext);
 
 /**
@@ -100,7 +99,7 @@ export function TranslationContext({
         internal__.registerTranslations(l, correctJSON(langMap[l]));
       });
     },
-    [internal__]
+    [internal__],
   );
 
   const value: TranslationContext = React.useMemo(
@@ -110,7 +109,7 @@ export function TranslationContext({
       importTranslations,
       setLang,
     }),
-    [importTranslations, internal__, lang]
+    [importTranslations, internal__, lang],
   );
 
   return <context.Provider value={value}>{children}</context.Provider>;
@@ -124,13 +123,13 @@ export function TranslationContext({
  */
 export function useTranslations(
   componentName: string | undefined = undefined,
-  keys: { [lang: string]: object } | undefined = undefined
+  keys: { [lang: string]: object } | undefined = undefined,
 ) {
   const { __, lang, importTranslations, setLang } = React.useContext(context);
 
   const disabled = React.useMemo(
     () => !__ || !lang || !importTranslations || !setLang,
-    [__, lang, importTranslations, setLang]
+    [__, lang, importTranslations, setLang],
   );
 
   const scoped__ = React.useMemo(() => {
@@ -149,9 +148,13 @@ export function useTranslations(
 
   const T = React.useCallback(
     ({ children, ...rest }: { children: React.ReactNode }) => (
-      <span dangerouslySetInnerHTML={{ __html: scoped__(children, { ...rest, children: null }) }} />
+      <span
+        dangerouslySetInnerHTML={{
+          __html: scoped__(children, { ...rest, children: null }),
+        }}
+      />
     ),
-    [scoped__]
+    [scoped__],
   );
 
   return React.useMemo(
@@ -162,6 +165,6 @@ export function useTranslations(
       T,
       disabled,
     }),
-    [T, scoped__, setLang, disabled]
+    [T, scoped__, setLang, disabled],
   );
 }

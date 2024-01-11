@@ -12,7 +12,7 @@ The third library is a SVG library that exports a JavaScript bundle for icons. T
 
 Canaille (v3+) uses CSS layers to avoid messing with user's code. Utilities classes will take over components style, and other css code will win everything.
 
-## Live preview 
+## Live preview
 
 You can go there to see Canaille at it current state: [https://cl0v1s.github.io/Canaille](https://cl0v1s.github.io/Canaille)
 
@@ -49,6 +49,3 @@ Please check `package.json` for a comprehensive list of canaille dependencies.
 
 1. `yarn`
 2. `yarn build-prod`
-
-
-

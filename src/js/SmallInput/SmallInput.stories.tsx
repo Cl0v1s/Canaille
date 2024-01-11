@@ -1,15 +1,15 @@
-import type { Story } from "@ladle/react"
-import React from "react"
-import { SmallInput } from "./common.tsx"
+import type { Story } from "@ladle/react";
+import React from "react";
+import { SmallInput } from "./common.tsx";
 
 export const SmallInputStory: Story = (props) => (
-  <div style={{width: "45px"}}>
-    <SmallInput {...props}/>
+  <div style={{ width: "45px" }}>
+    <SmallInput {...props} />
   </div>
-)
-SmallInputStory.storyName = "SmallInput"
+);
+SmallInputStory.storyName = "SmallInput";
 
-SmallInputStory.args = {}
+SmallInputStory.args = {};
 SmallInputStory.argTypes = {
   htmlType: {
     options: ["email", "number", "password", "search", "tel", "text", "url"],
@@ -19,4 +19,4 @@ SmallInputStory.argTypes = {
     options: ["default", "hover", "focus"],
     control: { type: "select" },
   },
-}
+};
