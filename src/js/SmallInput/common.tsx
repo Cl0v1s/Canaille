@@ -29,6 +29,7 @@ const SmallInput = React.forwardRef(
     return (
       <TextInput
         {...rest}
+        ref={ref}
         className={`${smallInputCSS} ${canaille} ${className}`}
         state={state}
       />

@@ -114,6 +114,7 @@ const Checkbox = React.forwardRef(
       validateOnChange,
       checkValidity,
       onInvalid,
+      ...rest
     }: ICheckboxBase,
     ref,
   ) => {
@@ -142,6 +143,7 @@ const Checkbox = React.forwardRef(
 
     return (
       <label
+        { ...rest }
         ref={ref as React.Ref<HTMLLabelElement>}
         id={id}
         htmlFor={htmlFor}

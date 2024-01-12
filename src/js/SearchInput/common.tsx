@@ -45,6 +45,7 @@ const SearchInput = React.forwardRef(
     return (
       <TextInput
         {...rest}
+        ref={ref}
         className={`${variables} ${canaille} ${className}`}
         placeholder={placeholder}
         state={state}

@@ -21,11 +21,12 @@ interface IError extends ICommonProps {
 }
 
 const Error = React.forwardRef(
-  ({ className = "", id, style, testId, children }: IError, ref) => {
+  ({ className = "", id, style, testId, children, ...rest }: IError, ref) => {
     const { error } = useStyle();
     // https://www.w3.org/WAI/GL/wiki/Using_ARIA_role_of_alert_for_Error_Feedback_in_Forms
     return (
       <span
+        { ...rest }
         id={id}
         role="alert"
         className={`${error} ${className}`}
