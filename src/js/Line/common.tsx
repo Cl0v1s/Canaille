@@ -1,7 +1,7 @@
 import React from 'react';
 import { createUseStyles } from '../helpers/createUseStyles';
 import { ICommonProps } from '../types/ICommonProps';
-import { line } from './style';
+import { line as lineCSS } from './style';
 
 import '../../scss/index.scss';
 
@@ -15,7 +15,7 @@ const useStyle = createUseStyles({
     height: 'var(--height)',
     color: 'var(--color)',
   } as React.CSSProperties,
-  canaille: ({ variant }) => line(variant),
+  canaille: ({ variant }) => lineCSS(variant),
 });
 
 interface ILine extends ICommonProps {

@@ -50,7 +50,7 @@ const SearchInput = React.forwardRef(
         placeholder={placeholder}
         state={state}
       >
-        <button type="button" className={button}>
+        <button aria-label="search" type="button" className={button}>
           <IconSearch size={20} />
         </button>
       </TextInput>

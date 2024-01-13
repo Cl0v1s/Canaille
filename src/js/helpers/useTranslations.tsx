@@ -7,7 +7,7 @@ interface Translator extends Function {
   registerTranslations: (lang: string, keys: object) => void;
 }
 
-interface TranslationContext {
+interface ITranslationContext {
   // counterpart or meteor i18n
   __: Translator;
   // ISO 639-1 language code
@@ -54,10 +54,10 @@ function interpolationAdapter(key, params = {}, { count = undefined } = {}) {
   return translation;
 }
 
-const context: React.Context<TranslationContext> = React.createContext({
+const context: React.Context<ITranslationContext> = React.createContext({
   __: {},
   lang: 'fr-FR',
-} as TranslationContext);
+} as ITranslationContext);
 
 /**
  * Declare a translation context to manage lang changes and trigger re-render
@@ -102,7 +102,7 @@ export function TranslationContext({
     [internal__],
   );
 
-  const value: TranslationContext = React.useMemo(
+  const value: ITranslationContext = React.useMemo(
     () => ({
       __: internal__,
       lang,
@@ -151,6 +151,7 @@ export function useTranslations(
   const T = React.useCallback(
     ({ children, ...rest }: { children: React.ReactNode }) => (
       <span
+        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{
           __html: scoped__(children, { ...rest, children: null }),
         }}

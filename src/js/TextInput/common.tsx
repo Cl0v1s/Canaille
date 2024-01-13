@@ -122,7 +122,7 @@ interface ITextInputBefore {
 }
 
 function TextInputBefore({ children }: ITextInputBefore) {
-  return <>{children}</>;
+  return children;
 }
 
 TextInputBefore.displayName = TEXTINPUTBEFORE_DISPLAYNAME;
@@ -168,7 +168,12 @@ export interface ITextInput extends ICommonProps, IFormProps {
    */
   spellcheck?: boolean;
   /**
-   * The values of the list attribute is the id of a <datalist> element located in the same document. The <datalist> provides a list of predefined values to suggest to the user for this input. Any values in the list that are not compatible with the type are not included in the suggested options. The values provided are suggestions, not requirements: users can select from this predefined list or provide a different value.
+   * The values of the list attribute is the id of a <datalist> element located in the same document
+   * The <datalist> provides a list of predefined values to suggest to the user for this input.
+   * Any values in the list that are not compatible with the type are not included
+   * in the suggested options.
+   * The values provided are suggestions, not requirements: users can select from this predefined
+   *  list or provide a different value.
    */
   list?: string;
   /**
@@ -290,9 +295,13 @@ const TextInput = React.forwardRef(
       if (onChange) onChange(event as unknown as React.ChangeEvent);
     }, [onChange]);
 
+    const contextValue = React.useMemo(() => ({
+      disabled: disabled || false, setError, onErase,
+    }), [disabled, setError, onErase]);
+
     return (
       <TextInputContext.Provider
-        value={{ disabled: disabled || false, setError, onErase }}
+        value={contextValue}
       >
         <fieldset
           aria-invalid={!!error}

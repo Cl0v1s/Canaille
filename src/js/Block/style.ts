@@ -3,17 +3,17 @@ import { merge } from '../helpers/merge';
 
 function stateCSS(state): React.CSSProperties {
   switch (state) {
-    default:
-    case 'default': {
-      return {
-
-      };
-    }
     case 'hover': {
       return {
         '--background-color': 'var(--additional-primary)',
         '--box-shadow': 'var(--dp-25)',
       } as React.CSSProperties;
+    }
+    case 'default':
+    default: {
+      return {
+
+      };
     }
   }
 }

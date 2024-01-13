@@ -5,7 +5,7 @@ import { IFormProps } from '../types/IFormProps';
 import { createUseStyles } from '../helpers/createUseStyles';
 import { useValidation } from '../helpers/form/form';
 import { Error } from '../Error/common';
-import { radio } from './style';
+import { radio as radioCSS } from './style';
 
 interface IRadioContext extends IFormProps {
   globalDisabled?: boolean;
@@ -27,7 +27,7 @@ export const RadioContext = React.createContext<IRadioContext>({
 });
 
 const useStyle = createUseStyles({
-  canaille: ({ state }) => radio(state),
+  canaille: ({ state }) => radioCSS(state),
   radio: {
     border: 'none',
   },
@@ -201,17 +201,19 @@ Omit<IRadio, 'ref'> & React.RefAttributes<unknown>
         checkValidity,
       });
 
+      const contextValue = React.useMemo(() => ({
+        value,
+        globalDisabled: disabled,
+        internalName,
+        defaultValue,
+        onChange,
+        error,
+        size,
+      }), [value, disabled, internalName, defaultValue, onChange, error, size]);
+
       return (
         <RadioContext.Provider
-          value={{
-            value,
-            globalDisabled: disabled,
-            internalName,
-            defaultValue,
-            onChange,
-            error,
-            size,
-          }}
+          value={contextValue}
         >
           <fieldset
             {...restOfProps}

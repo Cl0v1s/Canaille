@@ -2,16 +2,8 @@ import React from 'react';
 
 import { merge } from '../helpers/merge';
 
-function variantCSS(variant, state) {
+function variantCSS(variant) {
   switch (variant) {
-    default:
-    case 'primary': {
-      return {
-        '--background-color': 'var(--brand-primary)',
-        '--border': '2px solid var(--grey-100)',
-        '--border-radius': 'var(--rounded-100)',
-      };
-    }
     case 'secondary': {
       return {
         '--background-color': 'transparent',
@@ -25,17 +17,19 @@ function variantCSS(variant, state) {
         '--border-radius': 'var(--rounded-100)',
       };
     }
+    case 'primary':
+    default: {
+      return {
+        '--background-color': 'var(--brand-primary)',
+        '--border': '2px solid var(--grey-100)',
+        '--border-radius': 'var(--rounded-100)',
+      };
+    }
   }
 }
 
 function stateCSS(state, size, variant) {
   switch (state) {
-    default:
-    case 'default': {
-      return {
-        '--box-shadow': size === 50 ? 'var(--dp-25)' : 'var(--dp-75)',
-      };
-    }
     case 'hover': {
       return {
         '--box-shadow': size === 50 ? 'var(--dp-75)' : 'var(--dp-100)',
@@ -45,25 +39,31 @@ function stateCSS(state, size, variant) {
           : {}),
       };
     }
+    case 'default':
+    default: {
+      return {
+        '--box-shadow': size === 50 ? 'var(--dp-25)' : 'var(--dp-75)',
+      };
+    }
   }
 }
 
 function sizeCSS(size) {
   switch (size) {
-    default:
-    case 100: {
-      return {
-        '--padding': 'var(--spacing-3)',
-        '--gap': 'var(--spacing-2)',
-        '--font-size': 'var(--text-125)',
-      };
-    }
     case 50: {
       return {
         '--padding': 'var(--spacing-2)',
         '--gap': 'var(--spacing-2)',
         '--font-size': 'var(--text-100)',
         '--border-radius': 'var(--rounded-50)',
+      };
+    }
+    case 100:
+    default: {
+      return {
+        '--padding': 'var(--spacing-3)',
+        '--gap': 'var(--spacing-2)',
+        '--font-size': 'var(--text-125)',
       };
     }
   }
@@ -78,7 +78,7 @@ export function buttonCSS(variant, state, size) {
       '&:hover': stateCSS('hover', size, variant),
     } as React.CSSProperties,
     stateCSS(state, size, variant),
-    variantCSS(variant, state),
+    variantCSS(variant),
     sizeCSS(size),
   );
 }

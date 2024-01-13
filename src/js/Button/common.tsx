@@ -67,7 +67,7 @@ const Button = React.forwardRef(
     return (
       <button
         {...rest}
-        type={htmlType}
+        type={htmlType === 'submit' ? 'submit' : 'button'}
         ref={ref as React.Ref<HTMLButtonElement>}
         className={`${variables} ${button} ${canaille} ${className}`}
         id={id}

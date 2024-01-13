@@ -1,7 +1,7 @@
 import React from 'react';
 import { createUseStyles } from '../helpers/createUseStyles';
 import { ICommonProps } from '../types/ICommonProps';
-import { link } from './style';
+import { link as linkCSS } from './style';
 
 import '../../scss/index.scss';
 
@@ -24,7 +24,7 @@ const useStyle = createUseStyles({
     fontFamily: 'inherit',
     cursor: 'pointer',
   } as React.CSSProperties,
-  canaille: ({ state, size }) => link(state, size),
+  canaille: ({ state, size }) => linkCSS(state, size),
 });
 
 interface ILink extends ICommonProps {
@@ -67,6 +67,7 @@ const Link = React.forwardRef(
     return (
       <button
         {...rest}
+        type="button"
         ref={ref as React.LegacyRef<HTMLButtonElement>}
         onClick={onClick}
         className={`${link} ${canaille} ${className}`}

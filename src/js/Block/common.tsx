@@ -1,7 +1,7 @@
 import React from 'react';
 import { ICommonProps } from '../types/ICommonProps';
 import { createUseStyles } from '../helpers/createUseStyles';
-import { block } from './style';
+import { block as blockCSS } from './style';
 
 const useStyle = createUseStyles({
   block: {
@@ -17,7 +17,7 @@ const useStyle = createUseStyles({
     boxShadow: 'var(--box-shadow)',
     borderRadius: 'var(--radius)',
   } as React.CSSProperties,
-  canaille: ({ state }) => block(state),
+  canaille: ({ state }) => blockCSS(state),
 });
 
 interface IBlock extends ICommonProps {
@@ -26,7 +26,7 @@ interface IBlock extends ICommonProps {
 }
 
 export const Block = React.forwardRef(({
-  state, className, children, ...rest
+  state = 'default', className, children, ...rest
 }: IBlock, ref) => {
   const { block, canaille } = useStyle({ state });
 

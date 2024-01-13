@@ -1,14 +1,4 @@
-/**
- * Checkbox
- *
- * Selection controls are used to allow users to make a choice among multiple options,
- * such as selecting from a list of items,
- * choosing between radio buttons, or checking a checkbox.
- *
- * Styleguide Selectors.Checkbox
- */
-
-import React, { useEffect, useMemo } from 'react';
+import React from 'react';
 
 import { IconCheck } from '@tabler/icons-react';
 import { ICommonProps } from '../types/ICommonProps';
@@ -16,7 +6,7 @@ import { IFormProps } from '../types/IFormProps';
 import { createUseStyles } from '../helpers/createUseStyles';
 import { useValidation } from '../helpers/form/form';
 import { Error } from '../Error/common';
-import { checkbox } from './style';
+import { checkbox as checkboxCSS } from './style';
 
 import '../../scss/index.scss';
 
@@ -92,7 +82,7 @@ const useStyle = createUseStyles({
       backgroundColor: 'var(--background-color)',
     } as React.CSSProperties,
   } as React.CSSProperties,
-  canaille: ({ state }) => checkbox(state),
+  canaille: ({ state }) => checkboxCSS(state),
 });
 
 const Checkbox = React.forwardRef(

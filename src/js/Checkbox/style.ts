@@ -3,10 +3,6 @@ import { merge } from '../helpers/merge';
 
 function stateCSS(state): React.CSSProperties {
   switch (state) {
-    case 'default':
-    default: {
-      return {};
-    }
     case 'hover': {
       return {
         '--box-shadow': 'var(--dp-25)',
@@ -20,6 +16,10 @@ function stateCSS(state): React.CSSProperties {
         '--check-opacity': 1,
         '--background-color': 'var(--brand-primary)',
       } as React.CSSProperties;
+    }
+    case 'default':
+    default: {
+      return {};
     }
   }
 }

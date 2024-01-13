@@ -143,7 +143,8 @@ export function useValidation({
       ) as Array<HTMLEditableElement>
     ).forEach((i) => i.setAttribute('data-dirty', ''));
     node.setAttribute('data-dirty', wDirty ? 'true' : 'false');
-    // making react re-render there is preventing controlled component to work properly, temporary workaround
+    // making react re-render there is preventing
+    //  controlled component to work properly, temporary workaround
     const timeout = dirtyTimeout.current;
     if (timeout.timer) {
       clearTimeout(timeout.timer);
@@ -164,6 +165,7 @@ export function useValidation({
       const type = __(`type.${ev.target.type || 'text'}`);
 
       if (!type) {
+        // eslint-disable-next-line no-console
         console.warn(
           `Input type ${type} is unknown. Please add a valid translation for ${type} in form.xx-XX.json in boto's code base.`,
         );

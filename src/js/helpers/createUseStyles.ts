@@ -78,7 +78,6 @@ function createNode(rules = ''): Sheet {
     const styleNode = document.createElement('style') as HTMLStyleElement;
     styleNode.className = BASE_CLASS;
     document.head.appendChild(styleNode);
-    console.log(styleNode);
     const styleSheet = styleNode.sheet as CSSStyleSheet;
     // jest does not handle Layers correctly so we directly insert to the stylesheet instead
     if (!globalThis.process?.env?.JEST_WORKER_ID) {
@@ -182,6 +181,7 @@ function parseRule(prefix: string, ruleName: string, ruleBody: string) {
       if (keyframe) {
         body = body.replace(match[0], keyframe.name);
       } else {
+        // eslint-disable-next-line no-console
         console.warn(
           `createUseStyle: Unable to find declared keyframe ${match[1]} in stylesheet ${prefix}`,
         );
@@ -337,7 +337,8 @@ function createCSSBlock(
     (c) => `.${c.rule.trim()} {\n ${c.properties.join('\n')} \n}`,
   );
 
-  // we wrap rules inside a nested layer so we can ensure that higher prefix ID ensure higher priority
+  // we wrap rules inside a nested layer so we can ensure
+  // that higher prefix ID ensure higher priority
   const basePrefix = prefix.match(/[A-Z]+-[0-9]+/i);
   if (!basePrefix) throw new Error('Incoherent prefix');
   const layeredRule = `
@@ -358,7 +359,8 @@ function createCSSBlock(
 }
 
 // Select correct hook given the context
-// if react 18 -> React.useInsertionEffect else useLayoutEffect. On the ServerSide, we directly run the func
+// if react 18 -> React.useInsertionEffect else useLayoutEffect.
+// On the ServerSide, we directly run the func
 const useLayoutEffect = globalThis.window
   ? React.useInsertionEffect || React.useLayoutEffect
   : (fn) => fn();
@@ -398,16 +400,14 @@ export function createUseStyles(style: Style) {
       // we handle stringify some edgecases
       if (globalThis.HTMLElement && value instanceof HTMLElement) {
         return (
-          value.className
-          + value.id
-          + value.parentElement?.className
-          + value.parentElement?.id
+          `${value.className}${value.id}${value.parentElement?.className}${value.parentElement?.id}`
         );
       }
       return value;
     });
 
-    // we dont want to retrigger at dom edit everytime, so we store intermediate results to be able to compare
+    // we dont want to retrigger at dom edit everytime,
+    // so we store intermediate results to be able to compare
     const { dynamicClassNames, dynamicRules } = React.useMemo(() => {
       const wDynamicRules: Array<string> = [];
       const wDynamicClassNames = Object.keys(style).reduce((acc, curr) => {
