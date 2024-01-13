@@ -1,12 +1,15 @@
 {
-  "name": "canaille",
-  "version": "1.0.0",
+  "name": "@bdxtown/canaille",
+  "version": "1.0.0-rc0",
   "description": "bdx.town design system",
   "main": "index.js",
   "layers": {
     "components": "components",
     "utils": "utils"
   },
+  "files": [
+    "./dist/**"
+  ],
   "scripts": {
     "build": "npx webpack -c webpack.dev.mjs",
     "build-prod": "npx webpack -c webpack.prod.mjs",
