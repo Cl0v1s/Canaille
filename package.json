@@ -2,7 +2,8 @@
   "name": "@bdxtown/canaille",
   "version": "1.0.0-rc0",
   "description": "bdx.town design system",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "./dist/types/src/index.d.ts",
   "layers": {
     "components": "components",
     "utils": "utils"
