@@ -1,6 +1,6 @@
-import type { Story } from "@ladle/react";
-import React from "react";
-import { Radio } from "./common.tsx";
+import type { Story } from '@ladle/react';
+import React from 'react';
+import { Radio } from './common.tsx';
 
 export const RadioStory: Story = (props) => (
   <Radio>
@@ -12,13 +12,13 @@ export const RadioStory: Story = (props) => (
     </Radio.Item>
   </Radio>
 );
-RadioStory.storyName = "Radio";
+RadioStory.storyName = 'Radio';
 
-RadioStory.args = { className: "", state: "default" };
+RadioStory.args = { className: '', state: 'default' };
 RadioStory.argTypes = {
   state: {
-    options: ["default", "hover", "checked"],
-    control: { type: "select" },
-    defaultValue: "default",
+    options: ['default', 'hover', 'checked'],
+    control: { type: 'select' },
+    defaultValue: 'default',
   },
 };

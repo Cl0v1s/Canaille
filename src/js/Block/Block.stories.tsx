@@ -1,11 +1,11 @@
-import type { Story } from "@ladle/react"
-import React from "react"
-import { Block } from "./common.tsx"
+import type { Story } from '@ladle/react';
+import React from 'react';
+import { Block } from './common.tsx';
 
-export const BlockStory: Story = (props) => <Block {...props}>Test</Block>
-BlockStory.storyName = "Block"
+export const BlockStory: Story = (props) => <Block {...props}>Test</Block>;
+BlockStory.storyName = 'Block';
 
-BlockStory.args = {}
+BlockStory.args = {};
 BlockStory.argTypes = {
-  state: { options: ["default", "hover"], control: { type: "select" } },
-}
+  state: { options: ['default', 'hover'], control: { type: 'select' } },
+};

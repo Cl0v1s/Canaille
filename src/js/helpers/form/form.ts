@@ -1,23 +1,21 @@
-import React from "react";
+import React from 'react';
 
-import { flushSync } from "react-dom";
+import { useTranslations } from '../useTranslations';
 
-import { useTranslations } from "./../../useTranslations";
-
-import fr from "./form.fr-FR.i18n.json";
-import en from "./form.en-US.i18n.json";
-import de from "./form.de-DE.i18n.json";
-import gb from "./form.en-GB.i18n.json";
-import es from "./form.es-ES.i18n.json";
-import it from "./form.it-IT.i18n.json";
+import fr from './form.fr-FR.i18n.json';
+import en from './form.en-US.i18n.json';
+import de from './form.de-DE.i18n.json';
+import gb from './form.en-GB.i18n.json';
+import es from './form.es-ES.i18n.json';
+import it from './form.it-IT.i18n.json';
 
 const locales = {
-  "fr-FR": fr,
-  "en-US": en,
-  "de-DE": de,
-  "en-GB": gb,
-  "es-ES": es,
-  "it-IT": it,
+  'fr-FR': fr,
+  'en-US': en,
+  'de-DE': de,
+  'en-GB': gb,
+  'es-ES': es,
+  'it-IT': it,
 };
 
 export type HTMLEditableElement =
@@ -54,7 +52,7 @@ export function useFormValue(
     };
     if (!current.form.onResets) {
       current.form.onResets = [];
-      current.form.addEventListener("reset", callback);
+      current.form.addEventListener('reset', callback);
     }
     current.form.onResets = [...current.form.onResets, onReset];
 
@@ -64,7 +62,7 @@ export function useFormValue(
         (o) => o !== onReset,
       );
       if (current.form.onResets.length === 0) {
-        current.form.removeEventListener("reset", callback);
+        current.form.removeEventListener('reset', callback);
         current.form.onResets = null;
       }
     };
@@ -89,10 +87,10 @@ export function useValidation({
   validateOnChange: boolean;
   checkValidity: ((i: unknown) => string | undefined) | undefined;
   onInvalid:
-    | React.FormEventHandler<HTMLEditableElement | HTMLFieldSetElement>
-    | undefined;
+  | React.FormEventHandler<HTMLEditableElement | HTMLFieldSetElement>
+  | undefined;
 }) {
-  const { __, disabled } = useTranslations("useValidation", locales);
+  const { __, disabled } = useTranslations('useValidation', locales);
   const [error, setError] = React.useState<string | undefined>(undefined);
   // we use an object to be able to retrieve by ref and not only value (timers are stored as number)
   const dirtyTimeout = React.useRef({ timer: null });
@@ -110,7 +108,7 @@ export function useValidation({
   const setInitialValue = React.useCallback(() => {
     if (!(root.current instanceof HTMLSelectElement)) return;
     root.current.setAttribute(
-      "data-initial-value",
+      'data-initial-value',
       JSON.stringify(
         Array.from(root.current.selectedOptions).map((o) => o.value),
       ),
@@ -123,17 +121,16 @@ export function useValidation({
   const updateDirty = React.useCallback((node: HTMLEditableElement) => {
     let wDirty = false;
     if (
-      node instanceof HTMLInputElement &&
-      (node.type === "checkbox" || node.type === "radio")
+      node instanceof HTMLInputElement
+      && (node.type === 'checkbox' || node.type === 'radio')
     ) {
       // radio and checkbox
       wDirty = node.defaultChecked !== node.checked;
     } else if (node instanceof HTMLSelectElement) {
       // select element
-      const initialValue = JSON.parse(node.getAttribute("data-initial-value"));
-      wDirty =
-        node.selectedOptions.length !== initialValue.length ||
-        !!Array.from(node.selectedOptions).find(
+      const initialValue = JSON.parse(node.getAttribute('data-initial-value'));
+      wDirty = node.selectedOptions.length !== initialValue.length
+        || !!Array.from(node.selectedOptions).find(
           (o) => initialValue.indexOf(o.value) === -1,
         );
     } else {
@@ -142,10 +139,10 @@ export function useValidation({
     }
     (
       Array.from(
-        root.current.querySelectorAll("input, textarea, select"),
+        root.current.querySelectorAll('input, textarea, select'),
       ) as Array<HTMLEditableElement>
-    ).forEach((i) => i.setAttribute("data-dirty", ""));
-    node.setAttribute("data-dirty", wDirty ? "true" : "false");
+    ).forEach((i) => i.setAttribute('data-dirty', ''));
+    node.setAttribute('data-dirty', wDirty ? 'true' : 'false');
     // making react re-render there is preventing controlled component to work properly, temporary workaround
     const timeout = dirtyTimeout.current;
     if (timeout.timer) {
@@ -164,12 +161,13 @@ export function useValidation({
   const translateValidity = React.useCallback(
     (ev) => {
       // Error messages based on https://developer.mozilla.org/en-US/docs/Web/API/ValidityState
-      const type = __(`type.${ev.target.type || "text"}`);
+      const type = __(`type.${ev.target.type || 'text'}`);
 
-      if (!type)
+      if (!type) {
         console.warn(
           `Input type ${type} is unknown. Please add a valid translation for ${type} in form.xx-XX.json in boto's code base.`,
         );
+      }
 
       const e = Object.keys(fr.useValidation.error).find(
         (k) => ev.target.validity[k],
@@ -203,11 +201,11 @@ export function useValidation({
   const updateValidity = React.useCallback(
     (node: HTMLEditableElement | HTMLFieldSetElement, lifeCycle = false) => {
       // we reset all errors for given input / fieldset
-      node.setCustomValidity("");
+      node.setCustomValidity('');
       const children = Array.from(
-        root.current.querySelectorAll("input, textarea, select"),
+        root.current.querySelectorAll('input, textarea, select'),
       ) as Array<HTMLEditableElement>;
-      children.forEach((i) => i.setCustomValidity(""));
+      children.forEach((i) => i.setCustomValidity(''));
       // we update the error message if custom validation fails
       // this message is not shown until form or input call checkValidity
       if (checkValidity) {
@@ -240,7 +238,7 @@ export function useValidation({
   );
 
   const onInput: React.FormEventHandler<
-    HTMLEditableElement | HTMLFieldSetElement
+  HTMLEditableElement | HTMLFieldSetElement
   > = React.useCallback(
     (e) => {
       // Event on a fieldset, the target element is the EditableElement
@@ -253,7 +251,7 @@ export function useValidation({
   );
 
   const onInvalidInternal: React.FormEventHandler<
-    HTMLEditableElement | HTMLFieldSetElement
+  HTMLEditableElement | HTMLFieldSetElement
   > = React.useCallback(
     (e) => {
       translateValidity(e);

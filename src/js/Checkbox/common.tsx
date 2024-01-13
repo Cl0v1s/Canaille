@@ -8,21 +8,20 @@
  * Styleguide Selectors.Checkbox
  */
 
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo } from 'react';
 
-import { ICommonProps } from "./../types/ICommonProps";
-import { IFormProps } from "./../types/IFormProps";
-import { createUseStyles } from "./../createUseStyles";
-import { useValidation } from "./../helpers/form/form";
-import { Error } from "./../Error/common";
-import { checkbox } from "./style";
+import { IconCheck } from '@tabler/icons-react';
+import { ICommonProps } from '../types/ICommonProps';
+import { IFormProps } from '../types/IFormProps';
+import { createUseStyles } from '../helpers/createUseStyles';
+import { useValidation } from '../helpers/form/form';
+import { Error } from '../Error/common';
+import { checkbox } from './style';
 
-import { IconCheck } from "@tabler/icons-react";
-
-import "./../../scss/index.scss";
+import '../../scss/index.scss';
 
 export interface ICheckboxBase extends ICommonProps, IFormProps {
-  state?: "default" | "hover" | "checked";
+  state?: 'default' | 'hover' | 'checked';
   /**
    * Checkbox text content
    */
@@ -51,46 +50,46 @@ export interface ICheckboxBase extends ICommonProps, IFormProps {
 
 const useStyle = createUseStyles({
   variables: {
-    "--radius": "unset",
-    "--border": "unset",
-    "--font-size": "unset",
-    "--height": "unset",
-    "--width": "unset",
-    "--background-color": "unset",
-    "--label-color": "unset",
-    "--box-shadow": "unset",
-    "--pointer-events": "auto",
-    "--check-opacity": 0,
+    '--radius': 'unset',
+    '--border': 'unset',
+    '--font-size': 'unset',
+    '--height': 'unset',
+    '--width': 'unset',
+    '--background-color': 'unset',
+    '--label-color': 'unset',
+    '--box-shadow': 'unset',
+    '--pointer-events': 'auto',
+    '--check-opacity': 0,
   } as React.CSSProperties,
   checkbox: {
-    display: "inline-flex",
-    alignItems: "center",
-    gap: "var(--spacing-2)",
-    color: "var(--label-color)",
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: 'var(--spacing-2)',
+    color: 'var(--label-color)',
 
-    "&>input": {
-      position: "absolute",
+    '&>input': {
+      position: 'absolute',
       width: 0,
       height: 0,
       opacity: 0,
-      "& + div>svg": {
-        opacity: "var(--check-opacity)",
+      '& + div>svg': {
+        opacity: 'var(--check-opacity)',
       },
     },
-    "&>span": {
-      userSelect: "none",
+    '&>span': {
+      userSelect: 'none',
     },
-    "&>div": {
-      transition: "all 0.2s ease",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      width: "var(--width)",
-      height: "var(--height)",
-      boxShadow: "var(--box-shadow)",
-      borderRadius: "var(--radius)",
-      border: "var(--border)",
-      backgroundColor: "var(--background-color)",
+    '&>div': {
+      transition: 'all 0.2s ease',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: 'var(--width)',
+      height: 'var(--height)',
+      boxShadow: 'var(--box-shadow)',
+      borderRadius: 'var(--radius)',
+      border: 'var(--border)',
+      backgroundColor: 'var(--background-color)',
     } as React.CSSProperties,
   } as React.CSSProperties,
   canaille: ({ state }) => checkbox(state),
@@ -99,7 +98,7 @@ const useStyle = createUseStyles({
 const Checkbox = React.forwardRef(
   (
     {
-      state = "default",
+      state = 'default',
       className,
       id,
       testId,
@@ -143,7 +142,7 @@ const Checkbox = React.forwardRef(
 
     return (
       <label
-        { ...rest }
+        {...rest}
         ref={ref as React.Ref<HTMLLabelElement>}
         id={id}
         htmlFor={htmlFor}
@@ -181,6 +180,6 @@ const Checkbox = React.forwardRef(
   },
 );
 
-Checkbox.displayName = "Checkbox";
+Checkbox.displayName = 'Checkbox';
 
 export { Checkbox };

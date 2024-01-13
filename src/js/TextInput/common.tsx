@@ -1,102 +1,102 @@
-import React from "react";
+import React from 'react';
 
-import { ICommonProps } from "./../types/ICommonProps";
-import { IFormProps } from "./../types/IFormProps";
-import { createUseStyles } from "./../createUseStyles";
+import { TablerIconsProps } from '@tabler/icons-react';
+import { ICommonProps } from '../types/ICommonProps';
+import { IFormProps } from '../types/IFormProps';
+import { createUseStyles } from '../helpers/createUseStyles';
 
-import { Error } from "./../Error/common";
-import { useValidation } from "./../helpers/form/form";
-import { TablerIconsProps } from "@tabler/icons-react";
+import { Error } from '../Error/common';
+import { useValidation } from '../helpers/form/form';
 
-import { textInputCSS } from "./style";
+import { textInputCSS } from './style';
 
-import "./../../scss/index.scss";
+import '../../scss/index.scss';
 
-export const TEXTINPUTICON_DISPLAYNAME = "TextInputIcon";
-export const TEXTINPUTERASE_DISPLAYNAME = "TextInputErase";
-export const TEXTINPUTSELECT_DISPLAYNAME = "TextInputSelect";
+export const TEXTINPUTICON_DISPLAYNAME = 'TextInputIcon';
+export const TEXTINPUTERASE_DISPLAYNAME = 'TextInputErase';
+export const TEXTINPUTSELECT_DISPLAYNAME = 'TextInputSelect';
 
 const useStyle = createUseStyles({
   textInput: {
-    "--display": "unset",
-    "--background-color": "unset",
-    "--border": "unset",
-    "--box-shadow": "unset",
-    "--placeholder-color": "unset",
-    "--text-color": "unset",
-    "--padding-top": "unset",
-    "--padding-bottom": "unset",
-    "--padding-left": "unset",
-    "--padding-right": "unset",
-    "--border-radius": "unset",
-    "--font-size": "unset",
+    '--display': 'unset',
+    '--background-color': 'unset',
+    '--border': 'unset',
+    '--box-shadow': 'unset',
+    '--placeholder-color': 'unset',
+    '--text-color': 'unset',
+    '--padding-top': 'unset',
+    '--padding-bottom': 'unset',
+    '--padding-left': 'unset',
+    '--padding-right': 'unset',
+    '--border-radius': 'unset',
+    '--font-size': 'unset',
 
-    "--label-display": "unset",
-    "--label-color": "unset",
-    "--label-background-color": "unset",
-    "--label-padding": "unset",
-    "--label-border-radius": "unset",
-    "--label-border": "unset",
-    "--label-box-shadow": "unset",
-    "--label-padding-x": "unset",
-    "--label-padding-y": "unset",
-    "--label-font-size": "unset",
+    '--label-display': 'unset',
+    '--label-color': 'unset',
+    '--label-background-color': 'unset',
+    '--label-padding': 'unset',
+    '--label-border-radius': 'unset',
+    '--label-border': 'unset',
+    '--label-box-shadow': 'unset',
+    '--label-padding-x': 'unset',
+    '--label-padding-y': 'unset',
+    '--label-font-size': 'unset',
 
     border: 0,
     padding: 0,
-    display: "var(--display)",
+    display: 'var(--display)',
     minWidth: 0,
 
-    "&>label": {
-      position: "relative",
-      display: "var(--display)",
-      width: "100%",
+    '&>label': {
+      position: 'relative',
+      display: 'var(--display)',
+      width: '100%',
 
-      alignItems: "center",
+      alignItems: 'center',
 
-      paddingBottom: "var(--padding-bottom)",
-      paddingTop: "var(--padding-top)",
-      paddingLeft: "var(--padding-left)",
-      paddingRight: "var(--padding-right)",
-      border: "var(--border)",
-      boxShadow: "var(--box-shadow)",
-      backgroundColor: "var(--background-color)",
-      color: "var(--text-color)",
-      borderRadius: "var(--border-radius)",
+      paddingBottom: 'var(--padding-bottom)',
+      paddingTop: 'var(--padding-top)',
+      paddingLeft: 'var(--padding-left)',
+      paddingRight: 'var(--padding-right)',
+      border: 'var(--border)',
+      boxShadow: 'var(--box-shadow)',
+      backgroundColor: 'var(--background-color)',
+      color: 'var(--text-color)',
+      borderRadius: 'var(--border-radius)',
 
-      transition: "box-shadow 0.2s ease",
+      transition: 'box-shadow 0.2s ease',
 
-      "&>input": {
-        width: "100%",
-        display: "var(--display)",
-        fontFamily: "inherit",
+      '&>input': {
+        width: '100%',
+        display: 'var(--display)',
+        fontFamily: 'inherit',
         border: 0,
-        fontSize: "var(--font-size)",
-        backgroundColor: "transparent",
-        color: "inherit",
-        "&::placeholder": {
-          color: "var(--placeholder-color)",
-          fontFamily: "inherit",
+        fontSize: 'var(--font-size)',
+        backgroundColor: 'transparent',
+        color: 'inherit',
+        '&::placeholder': {
+          color: 'var(--placeholder-color)',
+          fontFamily: 'inherit',
         },
       } as React.CSSProperties,
 
-      "&>[aria-roledescription=label]": {
-        display: "var(--label-display)",
-        fontSize: "var(--label-font-size)",
-        position: "absolute",
+      '&>[aria-roledescription=label]': {
+        display: 'var(--label-display)',
+        fontSize: 'var(--label-font-size)',
+        position: 'absolute',
         top: 0,
-        border: "var(--label-border)",
-        left: "var(--padding-left)",
-        transform: "translateY(-50%)",
-        color: "var(--label-color)",
-        backgroundColor: "var(--label-background-color)",
-        padding: "var(--label-padding)",
-        borderRadius: "var(--label-border-radius)",
-        boxShadow: "var(--label-box-shadow)",
-        paddingLeft: "var(--label-padding-x)",
-        paddingRight: "var(--label-padding-x)",
-        paddingTop: "var(--label-padding-y)",
-        paddingBottom: "var(--label-padding-y)",
+        border: 'var(--label-border)',
+        left: 'var(--padding-left)',
+        transform: 'translateY(-50%)',
+        color: 'var(--label-color)',
+        backgroundColor: 'var(--label-background-color)',
+        padding: 'var(--label-padding)',
+        borderRadius: 'var(--label-border-radius)',
+        boxShadow: 'var(--label-box-shadow)',
+        paddingLeft: 'var(--label-padding-x)',
+        paddingRight: 'var(--label-padding-x)',
+        paddingTop: 'var(--label-padding-y)',
+        paddingBottom: 'var(--label-padding-y)',
       } as React.CSSProperties,
     } as React.CSSProperties,
   } as React.CSSProperties,
@@ -115,13 +115,15 @@ export const TextInputContext = React.createContext<ITextInputContext>({
   onErase: () => null,
 });
 
-const TEXTINPUTBEFORE_DISPLAYNAME = "TextInputBefore";
+const TEXTINPUTBEFORE_DISPLAYNAME = 'TextInputBefore';
 
 interface ITextInputBefore {
   children: React.ReactNode;
 }
 
-const TextInputBefore = ({ children }: ITextInputBefore) => <>{children}</>;
+function TextInputBefore({ children }: ITextInputBefore) {
+  return <>{children}</>;
+}
 
 TextInputBefore.displayName = TEXTINPUTBEFORE_DISPLAYNAME;
 
@@ -130,13 +132,13 @@ export interface ITextInput extends ICommonProps, IFormProps {
    * Input type
    */
   htmlType?:
-    | "email"
-    | "number"
-    | "password"
-    | "search"
-    | "tel"
-    | "text"
-    | "url";
+  | 'email'
+  | 'number'
+  | 'password'
+  | 'search'
+  | 'tel'
+  | 'text'
+  | 'url';
   /**
    * Placeholder content to show in the TextInput
    */
@@ -189,17 +191,17 @@ export interface ITextInput extends ICommonProps, IFormProps {
    * Optional additional elements
    */
   children?:
-    | Array<
-        React.ReactElement<
-          unknown,
-          React.JSXElementConstructor<TablerIconsProps>
-        >
-      >
-    | React.ReactElement<
-        unknown,
-        React.JSXElementConstructor<TablerIconsProps>
-      >;
-  state?: "default" | "hover" | "focus";
+  | Array<
+  React.ReactElement<
+  unknown,
+  React.JSXElementConstructor<TablerIconsProps>
+  >
+  >
+  | React.ReactElement<
+  unknown,
+  React.JSXElementConstructor<TablerIconsProps>
+  >;
+  state?: 'default' | 'hover' | 'focus';
 }
 
 const TextInput = React.forwardRef(
@@ -225,14 +227,14 @@ const TextInput = React.forwardRef(
       testId,
       validateOnChange,
       value,
-      htmlType: type = "text",
+      htmlType: type = 'text',
       list,
       max,
       min,
       pattern,
       step,
       children,
-      state = "default",
+      state = 'default',
       ...rest
     }: ITextInput,
     ref,
@@ -262,10 +264,8 @@ const TextInput = React.forwardRef(
 
       React.Children.toArray(children).forEach((c) => {
         const child = c as React.ReactElement<unknown, any>;
-        if (child.type?.displayName === TEXTINPUTSELECT_DISPLAYNAME)
-          wSelect.push(child);
-        else if (child.type?.displayName === TEXTINPUTBEFORE_DISPLAYNAME)
-          wBefore.push(child);
+        if (child.type?.displayName === TEXTINPUTSELECT_DISPLAYNAME) wSelect.push(child);
+        else if (child.type?.displayName === TEXTINPUTBEFORE_DISPLAYNAME) wBefore.push(child);
         else wOthers.push(child);
       });
 
@@ -280,9 +280,9 @@ const TextInput = React.forwardRef(
 
     const onErase = React.useCallback(() => {
       if (!input.current) return;
-      input.current.value = "";
-      const event = new Event("change", { bubbles: true });
-      Object.defineProperty(event, "target", {
+      input.current.value = '';
+      const event = new Event('change', { bubbles: true });
+      Object.defineProperty(event, 'target', {
         writable: false,
         value: input.current,
       });
@@ -316,7 +316,7 @@ const TextInput = React.forwardRef(
               name={name}
               onChange={onChange}
               // we set " " to allow the css :placeholder-shown to work even when no placeholder
-              placeholder={placeholder || " "}
+              placeholder={placeholder || ' '}
               readOnly={readonly}
               required={required}
               spellCheck={spellcheck}

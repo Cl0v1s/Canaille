@@ -45,6 +45,6 @@ export interface IFormProps {
    * @returns nulll
    */
   onInvalid?: React.FormEventHandler<
-    HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+  HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
   >;
 }

@@ -1,13 +1,13 @@
-import React from "react";
-import debounce from "debounce";
-import pack from "../../package.json";
+import React from 'react';
+import debounce from 'debounce';
+import pack from '../../../package.json';
 
 type Style = {
   [cls: string]:
-    | Style
-    | React.CSSProperties
-    | ((props: any) => Style | React.CSSProperties)
-    | Style;
+  | Style
+  | React.CSSProperties
+  | ((props: any) => Style | React.CSSProperties)
+  | Style;
 };
 
 type CSSItem = {
@@ -30,7 +30,7 @@ type Keyframe = {
   originalName: string;
 };
 
-const BASE_CLASS = "CANAILLE";
+const BASE_CLASS = 'CANAILLE';
 
 /**
  * Return a counter function used to generate rules prefixes
@@ -59,12 +59,12 @@ export const StyleMeta: {
   keyframes: [] as Array<Keyframe>,
   generateId: createGenerateId(),
   createGenerateId,
+  dynamicSheet: undefined as unknown as Sheet,
   layerSheet: undefined as unknown as Sheet,
   staticSheet: undefined as unknown as Sheet,
-  getServerSideStyle: () =>
-    `${StyleMeta.layerSheet.style.join(
-      "\n\n",
-    )}\n\n${StyleMeta.staticSheet.style.join("\n\n")}`,
+  getServerSideStyle: () => `${StyleMeta.layerSheet.style.join(
+    '\n\n',
+  )}\n\n${StyleMeta.staticSheet.style.join('\n\n')}`,
 };
 
 /**
@@ -73,9 +73,9 @@ export const StyleMeta: {
  * @param rules
  * @returns
  */
-function createNode(rules = ""): Sheet {
+function createNode(rules = ''): Sheet {
   if (globalThis.window) {
-    const styleNode = document.createElement("style") as HTMLStyleElement;
+    const styleNode = document.createElement('style') as HTMLStyleElement;
     styleNode.className = BASE_CLASS;
     document.head.appendChild(styleNode);
     console.log(styleNode);
@@ -152,7 +152,7 @@ function _updateLayersOrder(higherId: number) {
     (acc, curr, index) => [...acc, `${BASE_CLASS}-${index}`],
     [],
   );
-  const rule = `@layer ${layers.join(", ")};`;
+  const rule = `@layer ${layers.join(', ')};`;
   StyleMeta.layerSheet.insertRule(rule, 0);
 }
 
@@ -169,11 +169,11 @@ const updateLayersOrder = !globalThis.window
  */
 function parseRule(prefix: string, ruleName: string, ruleBody: string) {
   const name = ruleName
-    .replace(/([A-Z])/g, "-$1")
+    .replace(/([A-Z])/g, '-$1')
     .toLowerCase()
     .trim();
   let body = ruleBody;
-  if (name === "animation" || name === "animation-name") {
+  if (name === 'animation' || name === 'animation-name') {
     const match = body.match(/\$(\S+)/);
     if (match) {
       const keyframe = StyleMeta.keyframes.find(
@@ -220,10 +220,10 @@ function convertObjectToCSSString(
   if (!obj) return null;
   const { properties, children } = Object.keys(obj).reduce(
     (acc, curr) => {
-      if (typeof obj[curr] === "object") {
+      if (typeof obj[curr] === 'object') {
         const calculated = convertObjectToCSSString(prefix, curr, obj[curr]);
         if (!calculated) return acc;
-        const parts = curr.split(",");
+        const parts = curr.split(',');
         return {
           ...acc,
           children: [
@@ -260,7 +260,7 @@ function convertObjectToCSSString(
  */
 function createKeyFrames(prefix, ruleName, style, props: Array<any> = []) {
   // extract keyframe name
-  const originalName = ruleName.replace("@keyframes", "").trim();
+  const originalName = ruleName.replace('@keyframes', '').trim();
   const name = `${prefix}-${originalName}`;
   const keyframe: Keyframe = {
     name,
@@ -268,32 +268,32 @@ function createKeyFrames(prefix, ruleName, style, props: Array<any> = []) {
     prefix,
   };
   StyleMeta.keyframes.push(keyframe);
-  const css =
-    typeof style === "function"
-      ? convertObjectToCSSString(
-          prefix,
-          name,
-          (style as (...props: any) => React.CSSProperties)(...props),
-        )
-      : convertObjectToCSSString(prefix, name, style as React.CSSProperties);
-  if (!css)
+  const css = typeof style === 'function'
+    ? convertObjectToCSSString(
+      prefix,
+      name,
+      (style as (...props: any) => React.CSSProperties)(...props),
+    )
+    : convertObjectToCSSString(prefix, name, style as React.CSSProperties);
+  if (!css) {
     return {
-      className: "",
+      className: '',
       rules: [],
     };
+  }
   const frames = flatCSS(css);
   // first is keyframe declaration we can ignore
   frames.shift();
   const rule = `
     @keyframes ${name} {
       ${frames
-        .map((f) => `${f.rule} { ${f.properties.join("\n")} }`)
-        .join("\n\n")}
+    .map((f) => `${f.rule} { ${f.properties.join('\n')} }`)
+    .join('\n\n')}
     }
   `;
   return {
     // we dont want to issue any className for this
-    className: "",
+    className: '',
     rules: [rule],
   };
 }
@@ -312,38 +312,37 @@ function createCSSBlock(
   style,
   props: Array<any> = [],
 ) {
-  if (ruleName.startsWith("@keyframes"))
-    return createKeyFrames(prefix, ruleName, style, props);
+  if (ruleName.startsWith('@keyframes')) return createKeyFrames(prefix, ruleName, style, props);
   const className = `${prefix}-${ruleName}`;
-  const css =
-    typeof style === "function"
-      ? convertObjectToCSSString(
-          prefix,
-          className,
-          (style as (...props: any) => React.CSSProperties)(...props),
-        )
-      : convertObjectToCSSString(
-          prefix,
-          className,
-          style as React.CSSProperties,
-        );
+  const css = typeof style === 'function'
+    ? convertObjectToCSSString(
+      prefix,
+      className,
+      (style as (...props: any) => React.CSSProperties)(...props),
+    )
+    : convertObjectToCSSString(
+      prefix,
+      className,
+      style as React.CSSProperties,
+    );
 
-  if (!css)
+  if (!css) {
     return {
-      className: "",
+      className: '',
       rules: [],
     };
+  }
 
   const nakedRule = flatCSS(css).map(
-    (c) => `.${c.rule.trim()} {\n ${c.properties.join("\n")} \n}`,
+    (c) => `.${c.rule.trim()} {\n ${c.properties.join('\n')} \n}`,
   );
 
   // we wrap rules inside a nested layer so we can ensure that higher prefix ID ensure higher priority
   const basePrefix = prefix.match(/[A-Z]+-[0-9]+/i);
-  if (!basePrefix) throw new Error("Incoherent prefix");
+  if (!basePrefix) throw new Error('Incoherent prefix');
   const layeredRule = `
     @layer ${basePrefix[0]} {
-      ${nakedRule.join("\n\n")}
+      ${nakedRule.join('\n\n')}
     }
   `;
 
@@ -376,7 +375,7 @@ export function createUseStyles(style: Style) {
 
   // here we only apply "static" styles aka the ones that arent declared via func
   const staticClasseNames = Object.keys(style).reduce((acc, curr) => {
-    if (typeof style[curr] === "function") return acc;
+    if (typeof style[curr] === 'function') return acc;
     const { className, rules } = createCSSBlock(
       `${BASE_CLASS}-${sheetId}`,
       curr,
@@ -394,16 +393,17 @@ export function createUseStyles(style: Style) {
 
   return function useStyle(...props): { [key: string]: string } {
     // consistent id between server and browser
-    const styleId = React.useId().replace(/:/g, "");
+    const styleId = React.useId().replace(/:/g, '');
     const propsHash = JSON.stringify(props, (key, value) => {
       // we handle stringify some edgecases
-      if (globalThis.HTMLElement && value instanceof HTMLElement)
+      if (globalThis.HTMLElement && value instanceof HTMLElement) {
         return (
-          value.className +
-          value.id +
-          value.parentElement?.className +
-          value.parentElement?.id
+          value.className
+          + value.id
+          + value.parentElement?.className
+          + value.parentElement?.id
         );
+      }
       return value;
     });
 
@@ -411,7 +411,7 @@ export function createUseStyles(style: Style) {
     const { dynamicClassNames, dynamicRules } = React.useMemo(() => {
       const wDynamicRules: Array<string> = [];
       const wDynamicClassNames = Object.keys(style).reduce((acc, curr) => {
-        if (typeof style[curr] !== "function") return acc;
+        if (typeof style[curr] !== 'function') return acc;
         const { className, rules } = createCSSBlock(
           `${BASE_CLASS}-${sheetId}-${styleId}`,
           curr,
@@ -434,9 +434,7 @@ export function createUseStyles(style: Style) {
     // here we only apply "dynamic" styles aka the ones that are declared via func
     useLayoutEffect(() => {
       if (dynamicRules.length === 0) return undefined;
-      const rules = dynamicRules.map((r) =>
-        StyleMeta.dynamicSheet.insertRule(r, 0),
-      );
+      const rules = dynamicRules.map((r) => StyleMeta.dynamicSheet.insertRule(r, 0));
       return () => {
         rules.forEach((r) => StyleMeta.dynamicSheet.deleteRule(r));
       };

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 /**
  * Every Canaille component must support those parameters

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   findByText,
   fireEvent,
@@ -7,17 +7,17 @@ import {
   getByTestId,
   getByText,
   render,
-} from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
-import translate from "counterpart";
-import { container } from "webpack";
-import { TranslationContext, useValidation } from "../../../../dist/goodmed";
+import translate from 'counterpart';
+import { container } from 'webpack';
+import { TranslationContext, useValidation } from '../../../../dist/goodmed';
 
-import us from "./form.en-US.i18n.json";
+import us from './form.en-US.i18n.json';
 
-const HELLO = "Hello";
-const ERROR = "Not Hello";
+const HELLO = 'Hello';
+const ERROR = 'Not Hello';
 
 function DummyCmpSimpleInput({ onSubmit }) {
   const inp = React.useRef();
@@ -50,7 +50,7 @@ function DummyCmpMultipleInput({ onSubmit }) {
   const inp = React.useRef();
 
   const checkValidity = React.useCallback(
-    (val) => (val !== "1" ? ERROR : undefined),
+    (val) => (val !== '1' ? ERROR : undefined),
     [],
   );
   const { error, onInvalid, onInput } = useValidation({
@@ -107,7 +107,7 @@ function checkNativeRequired(Cmp, role, action) {
         <Cmp onSubmit={onSubmit} />
       </TranslationContext>,
     );
-    const submit = getByRole(container, "button");
+    const submit = getByRole(container, 'button');
     const input = getAllByRole(container, role)[0];
 
     fireEvent.click(submit);
@@ -123,22 +123,16 @@ function checkNativeRequired(Cmp, role, action) {
 }
 
 test(
-  "Validation system: native required check simple input",
-  checkNativeRequired(DummyCmpSimpleInput, "textbox", (input) =>
-    userEvent.type(input, HELLO),
-  ),
+  'Validation system: native required check simple input',
+  checkNativeRequired(DummyCmpSimpleInput, 'textbox', (input) => userEvent.type(input, HELLO)),
 );
 test(
-  "Validation system: native required check complexe input",
-  checkNativeRequired(DummyCmpMultipleInput, "radio", (input) =>
-    userEvent.click(input),
-  ),
+  'Validation system: native required check complexe input',
+  checkNativeRequired(DummyCmpMultipleInput, 'radio', (input) => userEvent.click(input)),
 );
 test(
-  "Validation system: native required check select input",
-  checkNativeRequired(DummyCmpSelectInput, "combobox", (input) =>
-    userEvent.selectOptions(input, HELLO),
-  ),
+  'Validation system: native required check select input',
+  checkNativeRequired(DummyCmpSelectInput, 'combobox', (input) => userEvent.selectOptions(input, HELLO)),
 );
 
 function checkCustomValidity(Cmp, wrong, right) {
@@ -151,7 +145,7 @@ function checkCustomValidity(Cmp, wrong, right) {
         <Cmp onSubmit={onSubmit} />
       </TranslationContext>,
     );
-    const submit = getByRole(container, "button");
+    const submit = getByRole(container, 'button');
 
     await wrong(container);
 
@@ -168,32 +162,30 @@ function checkCustomValidity(Cmp, wrong, right) {
 }
 
 test(
-  "Validation system: custom validity check simple input",
+  'Validation system: custom validity check simple input',
   checkCustomValidity(
     DummyCmpSimpleInput,
-    (container) => userEvent.type(getByRole(container, "textbox"), ERROR),
+    (container) => userEvent.type(getByRole(container, 'textbox'), ERROR),
     async (container) => {
-      await userEvent.clear(getByRole(container, "textbox"));
-      return userEvent.type(getByRole(container, "textbox"), HELLO);
+      await userEvent.clear(getByRole(container, 'textbox'));
+      return userEvent.type(getByRole(container, 'textbox'), HELLO);
     },
   ),
 );
 test(
-  "Validation system: custom validity check complexe input",
+  'Validation system: custom validity check complexe input',
   checkCustomValidity(
     DummyCmpMultipleInput,
-    (container) => userEvent.click(getAllByRole(container, "radio")[1]),
-    (container) => userEvent.click(getAllByRole(container, "radio")[0]),
+    (container) => userEvent.click(getAllByRole(container, 'radio')[1]),
+    (container) => userEvent.click(getAllByRole(container, 'radio')[0]),
   ),
 );
 test(
-  "Validation system: custom validity check select input",
+  'Validation system: custom validity check select input',
   checkCustomValidity(
     DummyCmpSelectInput,
-    (container) =>
-      userEvent.selectOptions(getByRole(container, "combobox"), ERROR),
-    (container) =>
-      userEvent.selectOptions(getByRole(container, "combobox"), HELLO),
+    (container) => userEvent.selectOptions(getByRole(container, 'combobox'), ERROR),
+    (container) => userEvent.selectOptions(getByRole(container, 'combobox'), HELLO),
   ),
 );
 
@@ -210,29 +202,23 @@ function checkSubmit(Cmp, action) {
 
     await action(container);
 
-    const submit = getByText(container, "submit");
+    const submit = getByText(container, 'submit');
     fireEvent.click(submit);
     expect(onSubmit).toHaveBeenCalledTimes(1);
   };
 }
 
 test(
-  "Validation system: submit simple input",
-  checkSubmit(DummyCmpSimpleInput, (container) =>
-    userEvent.type(getByRole(container, "textbox"), HELLO),
-  ),
+  'Validation system: submit simple input',
+  checkSubmit(DummyCmpSimpleInput, (container) => userEvent.type(getByRole(container, 'textbox'), HELLO)),
 );
 test(
-  "Validation system: submit complexe input",
-  checkSubmit(DummyCmpMultipleInput, (container) =>
-    userEvent.click(getAllByRole(container, "radio")[0]),
-  ),
+  'Validation system: submit complexe input',
+  checkSubmit(DummyCmpMultipleInput, (container) => userEvent.click(getAllByRole(container, 'radio')[0])),
 );
 test(
-  "Validation system: submit select input",
-  checkSubmit(DummyCmpSelectInput, (container) =>
-    userEvent.selectOptions(getByRole(container, "combobox"), HELLO),
-  ),
+  'Validation system: submit select input',
+  checkSubmit(DummyCmpSelectInput, (container) => userEvent.selectOptions(getByRole(container, 'combobox'), HELLO)),
 );
 
 function DirtyCmpSimpleInput() {
@@ -308,31 +294,29 @@ function checkDirty(Cmp, dirty, clean) {
 }
 
 test(
-  "Validation system: dirty simple input",
+  'Validation system: dirty simple input',
   checkDirty(
     DirtyCmpSimpleInput,
-    (container) => userEvent.type(getByRole(container, "textbox"), ERROR),
+    (container) => userEvent.type(getByRole(container, 'textbox'), ERROR),
     async (container) => {
-      await userEvent.clear(getByRole(container, "textbox"));
-      return userEvent.type(getByRole(container, "textbox"), HELLO);
+      await userEvent.clear(getByRole(container, 'textbox'));
+      return userEvent.type(getByRole(container, 'textbox'), HELLO);
     },
   ),
 );
 test(
-  "Validation system: dirty complexe input",
+  'Validation system: dirty complexe input',
   checkDirty(
     DirtyCmpMultipleInput,
-    (container) => userEvent.click(getAllByRole(container, "radio")[1]),
-    (container) => userEvent.click(getAllByRole(container, "radio")[0]),
+    (container) => userEvent.click(getAllByRole(container, 'radio')[1]),
+    (container) => userEvent.click(getAllByRole(container, 'radio')[0]),
   ),
 );
 test(
-  "Validation system: submit select input",
+  'Validation system: submit select input',
   checkDirty(
     DirtyCmpSelectInput,
-    (container) =>
-      userEvent.selectOptions(getByRole(container, "combobox"), ERROR),
-    (container) =>
-      userEvent.selectOptions(getByRole(container, "combobox"), HELLO),
+    (container) => userEvent.selectOptions(getByRole(container, 'combobox'), ERROR),
+    (container) => userEvent.selectOptions(getByRole(container, 'combobox'), HELLO),
   ),
 );

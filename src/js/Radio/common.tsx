@@ -1,11 +1,11 @@
-import * as React from "react";
+import * as React from 'react';
 
-import { ICommonProps } from "./../types/ICommonProps";
-import { IFormProps } from "./../types/IFormProps";
-import { createUseStyles } from "./../createUseStyles";
-import { useValidation } from "./../helpers/form/form";
-import { Error } from "./../Error/common";
-import { radio } from "./style";
+import { ICommonProps } from '../types/ICommonProps';
+import { IFormProps } from '../types/IFormProps';
+import { createUseStyles } from '../helpers/createUseStyles';
+import { useValidation } from '../helpers/form/form';
+import { Error } from '../Error/common';
+import { radio } from './style';
 
 interface IRadioContext extends IFormProps {
   globalDisabled?: boolean;
@@ -29,55 +29,55 @@ export const RadioContext = React.createContext<IRadioContext>({
 const useStyle = createUseStyles({
   canaille: ({ state }) => radio(state),
   radio: {
-    border: "none",
+    border: 'none',
   },
   radioItem: {
-    "--background-color": "unset",
-    "--border": "unset",
-    "--border-color": "unset",
-    "--inner-color": "unset",
-    "--size": "unset",
-    "--inner-size": "unset",
-    "--text-color": "unset",
-    "--box-shadow": "unset",
+    '--background-color': 'unset',
+    '--border': 'unset',
+    '--border-color': 'unset',
+    '--inner-color': 'unset',
+    '--size': 'unset',
+    '--inner-size': 'unset',
+    '--text-color': 'unset',
+    '--box-shadow': 'unset',
 
-    display: "inline-flex",
-    alignItems: "center",
+    display: 'inline-flex',
+    alignItems: 'center',
   } as React.CSSProperties,
 
   radioItemInput: {
-    position: "relative",
-    appearance: "none",
-    backgroundColor: "var(--background-color)",
+    position: 'relative',
+    appearance: 'none',
+    backgroundColor: 'var(--background-color)',
     margin: 0,
     padding: 0,
-    font: "inherit",
-    color: "var(--text-color)",
-    width: "var(--size)",
-    height: "var(--size)",
-    border: "var(--border)",
-    boxShadow: "var(--box-shadow)",
-    borderRadius: "50%",
-    marginRight: "var(--spacing-2)",
-    flexShrink: "0",
+    font: 'inherit',
+    color: 'var(--text-color)',
+    width: 'var(--size)',
+    height: 'var(--size)',
+    border: 'var(--border)',
+    boxShadow: 'var(--box-shadow)',
+    borderRadius: '50%',
+    marginRight: 'var(--spacing-2)',
+    flexShrink: '0',
 
-    "&::before": {
-      position: "absolute",
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%, -50%)",
+    '&::before': {
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
       content: "''",
-      display: "block",
-      width: "var(--inner-size)",
-      height: "var(--inner-size)",
-      backgroundColor: "var(--inner-color)",
-      borderRadius: "100%",
+      display: 'block',
+      width: 'var(--inner-size)',
+      height: 'var(--inner-size)',
+      backgroundColor: 'var(--inner-color)',
+      borderRadius: '100%',
     },
   } as React.CSSProperties,
 });
 
 export interface IRadioItem extends ICommonProps, IFormProps {
-  state?: "default" | "hover" | "checked";
+  state?: 'default' | 'hover' | 'checked';
   /**
    * Radio value
    */
@@ -95,11 +95,11 @@ export interface IRadioItem extends ICommonProps, IFormProps {
 const RadioItem = React.forwardRef(
   (
     {
-      className = "",
+      className = '',
       testId,
       style,
       value,
-      state = "default",
+      state = 'default',
       disabled,
       id,
       required,
@@ -143,7 +143,7 @@ const RadioItem = React.forwardRef(
   },
 );
 
-RadioItem.displayName = "RadioItem";
+RadioItem.displayName = 'RadioItem';
 
 export interface IRadio extends ICommonProps, IFormProps {
   /**
@@ -161,7 +161,7 @@ export interface IRadio extends ICommonProps, IFormProps {
 }
 
 const Radio: React.ForwardRefExoticComponent<
-  Omit<IRadio, "ref"> & React.RefAttributes<unknown>
+Omit<IRadio, 'ref'> & React.RefAttributes<unknown>
 > & { Item: typeof RadioItem } = Object.assign(
   React.forwardRef(
     (
@@ -236,6 +236,6 @@ const Radio: React.ForwardRefExoticComponent<
   },
 );
 
-Radio.displayName = "Radio";
+Radio.displayName = 'Radio';
 
 export { RadioItem, Radio };

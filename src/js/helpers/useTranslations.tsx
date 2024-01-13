@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 interface Translator extends Function {
@@ -23,7 +23,7 @@ interface TranslationContext {
 function correctJSON(keys) {
   const result = {};
   Object.keys(keys).forEach((key) => {
-    const parts: Array<string> = key.split(".");
+    const parts: Array<string> = key.split('.');
     let current = result;
     const last = parts.pop() as string;
     parts.forEach((part) => {
@@ -48,7 +48,7 @@ function interpolationAdapter(key, params = {}, { count = undefined } = {}) {
   let translation = this(count && count > 1 ? `${key}_plural` : key, params);
   // unifying interpolation system between counterpart and meteor i18n
   Object.keys(params).forEach((item) => {
-    const reg = new RegExp(`%\\(${item}\\)s`, "g");
+    const reg = new RegExp(`%\\(${item}\\)s`, 'g');
     translation = translation.replace(reg, params[item]);
   });
   return translation;
@@ -56,7 +56,7 @@ function interpolationAdapter(key, params = {}, { count = undefined } = {}) {
 
 const context: React.Context<TranslationContext> = React.createContext({
   __: {},
-  lang: "fr-FR",
+  lang: 'fr-FR',
 } as TranslationContext);
 
 /**
@@ -125,7 +125,9 @@ export function useTranslations(
   componentName: string | undefined = undefined,
   keys: { [lang: string]: object } | undefined = undefined,
 ) {
-  const { __, lang, importTranslations, setLang } = React.useContext(context);
+  const {
+    __, lang, importTranslations, setLang,
+  } = React.useContext(context);
 
   const disabled = React.useMemo(
     () => !__ || !lang || !importTranslations || !setLang,

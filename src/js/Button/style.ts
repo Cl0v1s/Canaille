@@ -1,28 +1,28 @@
-import React from "react";
+import React from 'react';
 
-import { merge } from "./../merge";
+import { merge } from '../helpers/merge';
 
 function variantCSS(variant, state) {
   switch (variant) {
     default:
-    case "primary": {
+    case 'primary': {
       return {
-        "--background-color": "var(--brand-primary)",
-        "--border": "2px solid var(--grey-100)",
-        "--border-radius": "var(--rounded-100)",
+        '--background-color': 'var(--brand-primary)',
+        '--border': '2px solid var(--grey-100)',
+        '--border-radius': 'var(--rounded-100)',
       };
     }
-    case "secondary": {
+    case 'secondary': {
       return {
-        "--background-color": "transparent",
-        "--box-shadow": "none",
+        '--background-color': 'transparent',
+        '--box-shadow': 'none',
       };
     }
-    case "light": {
+    case 'light': {
       return {
-        "--background-color": "var(--additional-primary)",
-        "--border": "2px solid var(--grey-100)",
-        "--border-radius": "var(--rounded-100)",
+        '--background-color': 'var(--additional-primary)',
+        '--border': '2px solid var(--grey-100)',
+        '--border-radius': 'var(--rounded-100)',
       };
     }
   }
@@ -31,17 +31,17 @@ function variantCSS(variant, state) {
 function stateCSS(state, size, variant) {
   switch (state) {
     default:
-    case "default": {
+    case 'default': {
       return {
-        "--box-shadow": size === 50 ? "var(--dp-25)" : "var(--dp-75)",
+        '--box-shadow': size === 50 ? 'var(--dp-25)' : 'var(--dp-75)',
       };
     }
-    case "hover": {
+    case 'hover': {
       return {
-        "--box-shadow": size === 50 ? "var(--dp-75)" : "var(--dp-100)",
-        transform: "translate(2px, -2px)",
-        ...(variant === "secondary"
-          ? { "--background-color": "var(--brand-primary)" }
+        '--box-shadow': size === 50 ? 'var(--dp-75)' : 'var(--dp-100)',
+        transform: 'translate(2px, -2px)',
+        ...(variant === 'secondary'
+          ? { '--background-color': 'var(--brand-primary)' }
           : {}),
       };
     }
@@ -53,17 +53,17 @@ function sizeCSS(size) {
     default:
     case 100: {
       return {
-        "--padding": "var(--spacing-3)",
-        "--gap": "var(--spacing-2)",
-        "--font-size": "var(--text-125)",
+        '--padding': 'var(--spacing-3)',
+        '--gap': 'var(--spacing-2)',
+        '--font-size': 'var(--text-125)',
       };
     }
     case 50: {
       return {
-        "--padding": "var(--spacing-2)",
-        "--gap": "var(--spacing-2)",
-        "--font-size": "var(--text-100)",
-        "--border-radius": "var(--rounded-50)",
+        '--padding': 'var(--spacing-2)',
+        '--gap': 'var(--spacing-2)',
+        '--font-size': 'var(--text-100)',
+        '--border-radius': 'var(--rounded-50)',
       };
     }
   }
@@ -72,10 +72,10 @@ function sizeCSS(size) {
 export function buttonCSS(variant, state, size) {
   return merge(
     {
-      "--text-color": "var(--grey-100)",
-      transition: "all 0.2s ease",
+      '--text-color': 'var(--grey-100)',
+      transition: 'all 0.2s ease',
 
-      "&:hover": stateCSS("hover", size, variant),
+      '&:hover': stateCSS('hover', size, variant),
     } as React.CSSProperties,
     stateCSS(state, size, variant),
     variantCSS(variant, state),
