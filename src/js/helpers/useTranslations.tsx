@@ -149,7 +149,7 @@ export function useTranslations(
   }, [__, componentName, importTranslations, keys, lang, setLang]);
 
   const T = React.useCallback(
-    ({ children, ...rest }: { children: React.ReactNode }) => (
+    ({ children, ...rest }: { children: React.ReactNode, [k: string]: any }) => (
       <span
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{
