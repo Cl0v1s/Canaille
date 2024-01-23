@@ -90,6 +90,7 @@ const Checkbox = React.forwardRef(
     {
       state = 'default',
       className,
+      name,
       id,
       testId,
       style,
@@ -109,7 +110,7 @@ const Checkbox = React.forwardRef(
   ) => {
     // Unique id, useful for testing
     const nameId = React.useId();
-    const name = `switch-${nameId}`;
+    const internalName = name || `switch-${nameId}`;
 
     const htmlFor = React.useId();
 
@@ -144,7 +145,7 @@ const Checkbox = React.forwardRef(
           ref={inputRef}
           id={htmlFor}
           data-testid={`${testId}-input`}
-          name={name}
+          name={internalName}
           disabled={disabled}
           defaultChecked={defaultChecked}
           checked={checked}
