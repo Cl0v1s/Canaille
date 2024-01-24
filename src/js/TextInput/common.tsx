@@ -343,8 +343,8 @@ const TextInput = React.forwardRef(
             {select}
             {others}
           </label>
-          {error && <Error>{error}</Error>}
         </fieldset>
+        {error && <Error>{error}</Error>}
       </TextInputContext.Provider>
     );
   },
