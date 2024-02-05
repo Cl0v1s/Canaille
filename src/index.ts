@@ -1,5 +1,6 @@
 import './scss/index.scss';
 
+export * from './js/helpers/createUseStyles';
 export * from './js/helpers/useTranslations';
 export * from './js/Block/common';
 export * from './js/Button/common';
