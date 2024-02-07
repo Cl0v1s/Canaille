@@ -7,6 +7,7 @@ function variantCSS(variant) {
     case 'secondary': {
       return {
         '--background-color': 'transparent',
+        '--border': '2px solid transparent',
         '--box-shadow': 'none',
       };
     }

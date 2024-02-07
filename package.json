@@ -20,7 +20,8 @@
     "lint": "npx eslint --fix .",
     "laddle": "npx yarn ladle serve",
     "laddle-build": "npx yarn ladle build --base $BASE_URL",
-    "story": "node toolchain/create-story.mjs"
+    "story": "node toolchain/create-story.mjs",
+    "publish": "npx yarn build-prod && npm publish"
   },
   "author": "",
   "license": "ISC",
