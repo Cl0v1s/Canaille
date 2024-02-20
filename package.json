@@ -1,15 +1,24 @@
 {
   "name": "@bdxtown/canaille",
-  "version": "1.0.0-rc1",
+  "version": "1.0.0-rc3",
   "description": "bdx.town design system",
-  "main": "dist/index.js",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "types": "./dist/types/src/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/types/src/index.d.ts"
+    }
+  },
   "layers": {
     "components": "components",
     "utils": "utils"
   },
   "files": [
-    "./dist/**"
+    "./dist/**",
+    "./scss/**"
   ],
   "scripts": {
     "build": "npx webpack -c webpack.dev.mjs",
@@ -65,5 +74,30 @@
     "eslint-config-airbnb-typescript": "^17.1.0",
     "webpack-bundle-analyzer": "^4.10.1"
   },
-  "packageManager": "yarn@4.0.2"
+  "packageManager": "yarn@4.0.2",
+  "resolutions": {
+    "@esbuild/android-arm64": "npm:0.15.18",
+    "@esbuild/android-arm": "npm:0.15.18",
+    "@esbuild/android-x64": "npm:0.15.18",
+    "@esbuild/darwin-arm64": "npm:0.15.18",
+    "@esbuild/darwin-x64": "npm:0.15.18",
+    "@esbuild/freebsd-arm64": "npm:0.15.18",
+    "@esbuild/freebsd-x64": "npm:0.15.18",
+    "@esbuild/linux-arm64": "npm:0.15.18",
+    "@esbuild/linux-arm": "npm:0.15.18",
+    "@esbuild/linux-ia32": "npm:0.15.18",
+    "@esbuild/linux-loong64": "npm:0.15.18",
+    "@esbuild/linux-mips64el": "npm:0.15.18",
+    "@esbuild/linux-ppc64": "npm:0.15.18",
+    "@esbuild/linux-riscv64": "npm:0.15.18",
+    "@esbuild/linux-s390x": "npm:0.15.18",
+    "@esbuild/netbsd-x64": "npm:0.15.18",
+    "@esbuild/openbsd-x64": "npm:0.15.18",
+    "@esbuild/sunos-x64": "npm:0.15.18",
+    "@esbuild/win32-arm64": "npm:0.15.18",
+    "@esbuild/win32-arm": "npm:0.15.18",
+    "@esbuild/win32-x64": "npm:0.15.18",
+    "@esbuild/win32-ia32": "npm:0.15.18",
+    "@esbuild/linux-x64": "npm:0.15.18"
+  }
 }
