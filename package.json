@@ -1,6 +1,6 @@
 {
   "name": "@bdxtown/canaille",
-  "version": "1.0.0-rc4",
+  "version": "1.0.0-rc5",
   "description": "bdx.town design system",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -34,7 +34,7 @@
     "laddle": "npx yarn ladle serve",
     "laddle-build": "npx yarn ladle build --base $BASE_URL",
     "story": "node toolchain/create-story.mjs",
-    "publish": "npx yarn build-prod && npm publish"
+    "publish-package": "npx yarn build-prod && npm publish"
   },
   "author": "",
   "license": "ISC",
