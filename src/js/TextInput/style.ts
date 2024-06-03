@@ -7,14 +7,9 @@ function stateCSS(state: string): React.CSSProperties {
     case 'default': {
       return {};
     }
-    case 'hover': {
-      return {
-        '--box-shadow': 'var(--dp-75)',
-      } as React.CSSProperties;
-    }
     case 'focus': {
       return {
-        '--box-shadow': 'var(--dp-100)',
+        '--box-shadow': 'var(--dp-75)',
       } as React.CSSProperties;
     }
   }
