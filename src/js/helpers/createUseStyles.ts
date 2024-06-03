@@ -159,6 +159,21 @@ const updateLayersOrder = !globalThis.window
   ? _updateLayersOrder
   : debounce(_updateLayersOrder, 50);
 
+class Scope {
+  hash: string;
+
+  mapping: { [x: string]: string };
+
+  constructor() {
+    this.hash = Math.random().toString(16).slice(2);
+    this.mapping = {};
+  }
+
+  register(original, scoped) {
+    this.mapping[original] = scoped;
+  }
+}
+
 /**
  * Convert JS rule into valid css rule
  * Handle $keyframe name replacement
@@ -166,12 +181,19 @@ const updateLayersOrder = !globalThis.window
  * @param ruleBody
  * @returns
  */
-function parseRule(prefix: string, ruleName: string, ruleBody: string) {
+function parseRule(prefix: string, ruleName: string, ruleBody: string, scope: Scope) {
   const name = ruleName
     .replace(/([A-Z])/g, '-$1')
     .toLowerCase()
     .trim();
   let body = ruleBody;
+
+  // handle scoped var usage
+  const varMatch = body.match(/var\((.+?)\)/);
+  if (varMatch && scope.mapping[varMatch[1]]) {
+    body = body.replace(varMatch[1], scope.mapping[varMatch[1]]);
+  }
+
   if (name === 'animation' || name === 'animation-name') {
     const match = body.match(/\$(\S+)/);
     if (match) {
@@ -187,6 +209,11 @@ function parseRule(prefix: string, ruleName: string, ruleBody: string) {
         );
       }
     }
+  // handle scope var declaration
+  } else if (name.startsWith('---')) {
+    const scoped = name.replace('---', `--${scope.hash}-`);
+    scope.register(name, scoped);
+    return `${scoped}: ${body};`;
   }
   return `${name}: ${body};`;
 }
@@ -216,12 +243,13 @@ function convertObjectToCSSString(
   prefix: string,
   className: string,
   obj: React.CSSProperties,
+  scope: Scope = new Scope(),
 ): CSSItem | null {
   if (!obj) return null;
   const { properties, children } = Object.keys(obj).reduce(
     (acc, curr) => {
       if (typeof obj[curr] === 'object') {
-        const calculated = convertObjectToCSSString(prefix, curr, obj[curr]);
+        const calculated = convertObjectToCSSString(prefix, curr, obj[curr], scope);
         if (!calculated) return acc;
         const parts = curr.split(',');
         return {
@@ -234,7 +262,7 @@ function convertObjectToCSSString(
       }
       return {
         ...acc,
-        properties: [...acc.properties, parseRule(prefix, curr, obj[curr])],
+        properties: [...acc.properties, parseRule(prefix, curr, obj[curr], scope)],
       } as never;
     },
     {
