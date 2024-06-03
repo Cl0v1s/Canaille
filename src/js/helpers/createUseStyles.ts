@@ -189,9 +189,11 @@ function parseRule(prefix: string, ruleName: string, ruleBody: string, scope: Sc
   let body = ruleBody;
 
   // handle scoped var usage
-  const varMatch = body.match(/var\((.+?)\)/);
-  if (varMatch && scope.mapping[varMatch[1]]) {
-    body = body.replace(varMatch[1], scope.mapping[varMatch[1]]);
+  if (typeof body === 'string') {
+    const varMatch = body?.match(/var\((.+?)\)/);
+    if (varMatch && scope.mapping[varMatch[1]]) {
+      body = body.replace(varMatch[1], scope.mapping[varMatch[1]]);
+    }
   }
 
   if (name === 'animation' || name === 'animation-name') {
@@ -243,7 +245,7 @@ function convertObjectToCSSString(
   prefix: string,
   className: string,
   obj: React.CSSProperties,
-  scope: Scope = new Scope(),
+  scope: Scope,
 ): CSSItem | null {
   if (!obj) return null;
   const { properties, children } = Object.keys(obj).reduce(
@@ -286,7 +288,7 @@ function convertObjectToCSSString(
  * @param props
  * @returns
  */
-function createKeyFrames(prefix, ruleName, style, props: Array<any> = []) {
+function createKeyFrames(prefix, ruleName, style, scope: Scope, props: Array<any> = []) {
   // extract keyframe name
   const originalName = ruleName.replace('@keyframes', '').trim();
   const name = `${prefix}-${originalName}`;
@@ -301,8 +303,9 @@ function createKeyFrames(prefix, ruleName, style, props: Array<any> = []) {
       prefix,
       name,
       (style as (...props: any) => React.CSSProperties)(...props),
+      scope,
     )
-    : convertObjectToCSSString(prefix, name, style as React.CSSProperties);
+    : convertObjectToCSSString(prefix, name, style as React.CSSProperties, scope);
   if (!css) {
     return {
       className: '',
@@ -338,20 +341,23 @@ function createCSSBlock(
   prefix: string,
   ruleName: string,
   style,
+  scope: Scope,
   props: Array<any> = [],
 ) {
-  if (ruleName.startsWith('@keyframes')) return createKeyFrames(prefix, ruleName, style, props);
+  if (ruleName.startsWith('@keyframes')) return createKeyFrames(prefix, ruleName, style, scope, props);
   const className = `${prefix}-${ruleName}`;
   const css = typeof style === 'function'
     ? convertObjectToCSSString(
       prefix,
       className,
       (style as (...props: any) => React.CSSProperties)(...props),
+      scope,
     )
     : convertObjectToCSSString(
       prefix,
       className,
       style as React.CSSProperties,
+      scope,
     );
 
   if (!css) {
@@ -403,6 +409,8 @@ export function createUseStyles(style: Style) {
   // SSR users will need to reset the counter before each page render
   const sheetId = StyleMeta.generateId();
 
+  const scope = new Scope();
+
   // here we only apply "static" styles aka the ones that arent declared via func
   const staticClasseNames = Object.keys(style).reduce((acc, curr) => {
     if (typeof style[curr] === 'function') return acc;
@@ -410,6 +418,7 @@ export function createUseStyles(style: Style) {
       `${BASE_CLASS}-${sheetId}`,
       curr,
       style[curr],
+      scope,
     );
     rules.forEach((r) => StyleMeta.staticSheet.insertRule(r, 0));
     return {
@@ -444,6 +453,7 @@ export function createUseStyles(style: Style) {
           `${BASE_CLASS}-${sheetId}-${styleId}`,
           curr,
           style[curr],
+          scope,
           props,
         );
         wDynamicRules.push(...rules);

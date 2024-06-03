@@ -4,6 +4,19 @@ import { createUseStyles } from '../helpers/createUseStyles';
 import { block as blockCSS } from './style';
 
 const useStyle = createUseStyles({
+  block: {
+    '---border': 'unset',
+    '---padding': 'unset',
+    '---background-color': 'unset',
+    '---box-shadow': 'unset',
+    '---radius': 'unset',
+
+    border: 'var(---border)',
+    padding: 'var(---padding)',
+    backgroundColor: 'var(---background-color)',
+    boxShadow: 'var(---box-shadow)',
+    borderRadius: 'var(---radius)',
+  } as React.CSSProperties,
   canaille: ({ state }) => blockCSS(state),
 });
 
@@ -15,10 +28,10 @@ interface IBlock extends ICommonProps {
 export const Block = React.forwardRef(({
   state = 'default', className, children, ...rest
 }: IBlock, ref) => {
-  const { canaille } = useStyle({ state });
+  const { block, canaille } = useStyle({ state });
 
   return (
-    <div {...rest} ref={ref as React.LegacyRef<HTMLDivElement>} className={`${canaille} ${className}`}>
+    <div {...rest} ref={ref as React.LegacyRef<HTMLDivElement>} className={`${block} ${canaille} ${className}`}>
       { children }
     </div>
   );

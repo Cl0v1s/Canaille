@@ -25,11 +25,5 @@ export const block = (state) => merge({
   '---box-shadow': 'unset',
   '---radius': 'var(--rounded-100)',
 
-  border: 'var(---border)',
-  padding: 'var(---padding)',
-  backgroundColor: 'var(---background-color)',
-  boxShadow: 'var(---box-shadow)',
-  borderRadius: 'var(---radius)',
-
   '&:hover': stateCSS('hover'),
 } as React.CSSProperties, stateCSS(state));
