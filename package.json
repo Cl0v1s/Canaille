@@ -1,6 +1,6 @@
 {
   "name": "@bdxtown/canaille",
-  "version": "1.0.0-rc5",
+  "version": "1.0.0-rc6",
   "description": "bdx.town design system",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
