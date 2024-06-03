@@ -18,12 +18,12 @@ function stateCSS(state): React.CSSProperties {
   }
 }
 
-export const block = (state) => merge({
+export const block = (variant, state) => merge({
   '---border': '2px solid var(--grey-100)',
   '---padding': 'var(--spacing-3)',
   '---background-color': 'var(--white)',
   '---box-shadow': 'unset',
   '---radius': 'var(--rounded-100)',
 
-  '&:hover': stateCSS('hover'),
+  '&:hover': variant === 'interactive' ? stateCSS('hover') : null,
 } as React.CSSProperties, stateCSS(state));
