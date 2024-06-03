@@ -21,7 +21,7 @@ const useStyle = createUseStyles({
 });
 
 interface IBlock extends ICommonProps {
-  variant: 'default' | 'interactive',
+  variant?: 'default' | 'interactive',
   state?: 'default' | 'hover',
   children: React.ReactNode,
 }
