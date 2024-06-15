@@ -24,7 +24,6 @@ interface ILine extends ICommonProps {
 
 const Line = React.forwardRef(
   ({ variant = 'dashed', className = '', ...rest }: ILine, ref: unknown) => {
-    const a = useMemo(() => 1, []);
     const { line, canaille } = useStyle({ variant });
     return (
       <div
