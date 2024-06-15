@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { createUseStyles } from '../helpers/createUseStyles';
 import { ICommonProps } from '../types/ICommonProps';
 import { line as lineCSS } from './style';
@@ -24,6 +24,7 @@ interface ILine extends ICommonProps {
 
 const Line = React.forwardRef(
   ({ variant = 'dashed', className = '', ...rest }: ILine, ref: unknown) => {
+    const a = useMemo(() => 1, []);
     const { line, canaille } = useStyle({ variant });
     return (
       <div
